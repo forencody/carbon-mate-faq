@@ -265,15 +265,166 @@
     }
     .back-btn:hover { border-color: var(--ccs-blue); color: var(--ccs-blue); }
 
-    .workspace-body { color: var(--ccs-gray-600); }
-    .placeholder {
-      padding: 36px 20px; text-align: center;
-      background: var(--ccs-gray-50); border-radius: 8px;
-      color: var(--ccs-gray-600); margin: 0 0 8px;
+    .workspace-body { color: var(--ccs-gray-900); }
+
+    /* FAQ 列表:工具列(統計 + 搜尋 + 新增) */
+    .faq-toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 14px; flex-wrap: wrap;
     }
-    .placeholder-sub {
-      text-align: center; font-size: 12px; color: var(--ccs-gray-400);
-      margin: 0;
+    .faq-counts { display: flex; gap: 8px; flex-wrap: wrap; }
+    .count-pill {
+      font-size: 12px; padding: 4px 12px;
+      background: var(--ccs-gray-100); color: var(--ccs-gray-600);
+      border-radius: 999px;
+    }
+    .count-pill strong { color: var(--ccs-navy); font-weight: 600; margin-right: 4px; }
+    .faq-actions { display: flex; gap: 8px; align-items: center; }
+    .search-input {
+      height: 34px; padding: 0 12px;
+      border: 1px solid var(--ccs-gray-200);
+      border-radius: 8px;
+      font-size: 13px; font-family: inherit;
+      background: var(--ccs-gray-50);
+      min-width: 200px;
+      transition: border-color .15s, background .15s, box-shadow .15s;
+    }
+    .search-input:focus {
+      outline: none; border-color: var(--ccs-blue);
+      background: var(--ccs-white);
+      box-shadow: 0 0 0 3px rgba(49,101,167,.1);
+    }
+    .btn-primary {
+      height: 34px; padding: 0 16px;
+      background: var(--ccs-orange); color: var(--ccs-white);
+      border: none; border-radius: 8px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: inherit;
+      transition: filter .12s, transform .05s;
+    }
+    .btn-primary:hover { filter: brightness(0.95); }
+    .btn-primary:active { transform: scale(0.98); }
+
+    /* 章節過濾 pills */
+    .section-filter {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      padding: 4px 0 12px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--ccs-gray-100);
+    }
+    .section-pill {
+      font-size: 12px; padding: 5px 12px;
+      background: var(--ccs-white);
+      border: 1px solid var(--ccs-gray-200);
+      color: var(--ccs-gray-600);
+      border-radius: 999px; cursor: pointer;
+      font-family: inherit;
+      transition: border-color .12s, color .12s, background .12s;
+    }
+    .section-pill:hover { color: var(--ccs-navy); border-color: var(--ccs-gray-400); }
+    .section-pill.active {
+      background: var(--ccs-blue); color: var(--ccs-white);
+      border-color: var(--ccs-blue);
+    }
+
+    /* FAQ 表格 */
+    .faq-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--ccs-gray-200);
+      border-radius: 8px;
+      background: var(--ccs-white);
+    }
+    .faq-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 13px;
+    }
+    .faq-table th {
+      text-align: left;
+      font-size: 11px; font-weight: 500;
+      color: var(--ccs-gray-600);
+      background: var(--ccs-gray-50);
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--ccs-gray-200);
+      letter-spacing: .3px; text-transform: uppercase;
+      position: sticky; top: 0; z-index: 1;
+    }
+    .faq-table td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--ccs-gray-100);
+      vertical-align: middle;
+    }
+    .faq-table tr:last-child td { border-bottom: none; }
+    .faq-table tbody tr { transition: background .12s; }
+    .faq-table tbody tr:hover { background: var(--ccs-gray-50); }
+    .col-num {
+      width: 56px; font-weight: 600; color: var(--ccs-blue);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .col-section {
+      width: 150px; color: var(--ccs-gray-600); white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis;
+    }
+    .col-question {
+      color: var(--ccs-gray-900);
+      max-width: 480px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .col-locales { width: 92px; white-space: nowrap; }
+    .col-updated {
+      width: 100px; color: var(--ccs-gray-400);
+      font-size: 12px; white-space: nowrap;
+    }
+    .col-actions { width: 110px; text-align: right; white-space: nowrap; }
+
+    /* 語系完整度小圓點 */
+    .dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+    .dot:last-child { margin-right: 0; }
+    .dot-full    { background: var(--ccs-blue); }
+    .dot-partial { background: var(--color-warning); }
+    .dot-empty   { background: var(--ccs-gray-200); }
+
+    /* 列表內按鈕 */
+    .btn-row {
+      font-size: 12px; padding: 4px 10px;
+      margin-left: 6px;
+      background: var(--ccs-white);
+      border: 1px solid var(--ccs-gray-200);
+      border-radius: 6px;
+      color: var(--ccs-gray-900); cursor: pointer;
+      font-family: inherit;
+      transition: border-color .12s, color .12s, background .12s;
+    }
+    .btn-row:hover { border-color: var(--ccs-blue); color: var(--ccs-blue); }
+    .btn-row.btn-danger:hover {
+      border-color: var(--color-danger); color: var(--color-danger);
+    }
+
+    /* 空狀態 / 載入態 / 錯誤態 */
+    .loading-cell, .error-cell, .empty-cell {
+      text-align: center; padding: 40px 20px;
+      color: var(--ccs-gray-600);
+    }
+    .error-cell { color: var(--color-danger); }
+    .faq-empty {
+      padding: 48px 24px;
+      text-align: center;
+      background: var(--ccs-gray-50);
+      border: 1px dashed var(--ccs-gray-200);
+      border-radius: 8px;
+    }
+    .faq-empty p { margin: 0 0 8px; color: var(--ccs-gray-600); }
+    .faq-empty .hint { font-size: 12px; color: var(--ccs-gray-400); }
+    .faq-empty code {
+      background: var(--ccs-gray-100);
+      padding: 2px 6px; border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--ccs-navy);
     }
 
     /* ===== Responsive ===== */
@@ -366,8 +517,45 @@
         </div>
       </div>
       <div class="workspace-body" id="workspaceBody">
-        <p class="placeholder">FAQ 列表將於 Milestone B 完成後顯示在此</p>
-        <p class="placeholder-sub">Milestone A 已完成:登入、角色路由、登出</p>
+        <!-- 工具列:統計 + 搜尋 + 新增 -->
+        <div class="faq-toolbar">
+          <div class="faq-counts">
+            <span class="count-pill"><strong id="totalCount">0</strong>題</span>
+            <span class="count-pill"><strong id="sectionsCount">0</strong>章節</span>
+          </div>
+          <div class="faq-actions">
+            <input type="search" id="faqSearch" class="search-input" placeholder="搜尋題目 / 回答 / 編號…" autocomplete="off">
+            <button class="btn-primary" id="addFaqBtn" type="button">+ 新增 FAQ</button>
+          </div>
+        </div>
+
+        <!-- 章節過濾 pills -->
+        <div class="section-filter" id="sectionFilter"></div>
+
+        <!-- FAQ 列表表格 -->
+        <div class="faq-table-wrap" id="faqTableWrap">
+          <table class="faq-table">
+            <thead>
+              <tr>
+                <th class="col-num">編號</th>
+                <th class="col-section">章節</th>
+                <th class="col-question">題目(繁中)</th>
+                <th class="col-locales">語系</th>
+                <th class="col-updated">更新</th>
+                <th class="col-actions"></th>
+              </tr>
+            </thead>
+            <tbody id="faqTbody">
+              <tr><td colspan="6" class="loading-cell">載入 FAQ 中…</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 完全沒資料時的空狀態(會由 JS 控制顯示) -->
+        <div class="faq-empty" id="faqEmpty" hidden>
+          <p>此客戶目前沒有任何 FAQ。</p>
+          <p class="hint">可以從訪客頁的 DevTools console 跑 <code>await CCS.dataProvider.seedFromLocales('anyking')</code> 匯入本地 seed,或點上方「新增 FAQ」開始建立。</p>
+        </div>
       </div>
     </section>
   </main>
@@ -416,6 +604,17 @@
 
       const { authProvider, dataProvider, TENANT, escapeHtml } = window.CCS;
       const $ = (sel) => document.querySelector(sel);
+
+      // ============================================================
+      // FAQ 列表狀態(M-B)
+      // ============================================================
+      const state = {
+        tenantId: null,
+        user: null,
+        content: null,          // { sections, faqs, metaByLocale }
+        search: '',
+        sectionFilter: null     // null = 全部章節
+      };
 
       // ============================================================
       // 友善錯誤訊息(避免直接顯示 Firebase 內部 code 給使用者)
@@ -517,6 +716,18 @@
       $('#backToTenants').addEventListener('click', () => routeToTenantSelector());
 
       // ============================================================
+      // FAQ 列表事件
+      // ============================================================
+      $('#faqSearch').addEventListener('input', (e) => {
+        state.search = e.target.value;
+        renderFaqRows();
+      });
+
+      $('#addFaqBtn').addEventListener('click', () => {
+        alert('新增 FAQ 功能將於 Milestone C(M-C)完成,屆時會跳出編輯表單。');
+      });
+
+      // ============================================================
       // 路由
       // ============================================================
       async function routeAfterLogin(user) {
@@ -595,6 +806,171 @@
         $('#backToTenants').hidden = !(user && user.role === 'super_admin');
         $('#visitorLink').href = `index.html?tenant=${encodeURIComponent(tenantId)}`;
         showView('faqWorkspace');
+        // 進工作區後立刻載入 FAQ 列表
+        await renderFaqList(tenantId, user);
+      }
+
+      // ============================================================
+      // FAQ 列表渲染(M-B)
+      // ============================================================
+      async function renderFaqList(tenantId, user) {
+        state.tenantId = tenantId;
+        state.user = user;
+        state.search = '';
+        state.sectionFilter = null;
+        $('#faqSearch').value = '';
+
+        const tbody = $('#faqTbody');
+        tbody.innerHTML = '<tr><td colspan="6" class="loading-cell">載入 FAQ 中…</td></tr>';
+        $('#faqEmpty').hidden = true;
+        $('#sectionFilter').innerHTML = '';
+
+        let content;
+        try {
+          content = await dataProvider.getContent(tenantId);
+        } catch (err) {
+          console.error('讀取 FAQ 失敗', err);
+          tbody.innerHTML = `<tr><td colspan="6" class="error-cell">讀取失敗:${escapeHtml(err.message || String(err))}</td></tr>`;
+          return;
+        }
+        state.content = content;
+
+        $('#totalCount').textContent = content.faqs.length;
+        $('#sectionsCount').textContent = content.sections.length;
+
+        if (content.faqs.length === 0) {
+          tbody.innerHTML = '';
+          $('#faqTableWrap').hidden = true;
+          $('#faqEmpty').hidden = false;
+          return;
+        }
+        $('#faqTableWrap').hidden = false;
+        $('#faqEmpty').hidden = true;
+
+        renderSectionFilter(content.sections);
+        renderFaqRows();
+      }
+
+      function renderSectionFilter(sections) {
+        const wrap = $('#sectionFilter');
+        wrap.innerHTML = '';
+
+        const makeBtn = (id, label) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'section-pill' + (state.sectionFilter === id ? ' active' : '');
+          btn.dataset.sectionId = id == null ? '' : id;
+          btn.textContent = label;
+          btn.addEventListener('click', () => {
+            state.sectionFilter = id;
+            wrap.querySelectorAll('.section-pill').forEach((p) => {
+              p.classList.toggle('active', (p.dataset.sectionId || '') === (id == null ? '' : id));
+            });
+            renderFaqRows();
+          });
+          return btn;
+        };
+
+        wrap.appendChild(makeBtn(null, '全部'));
+        sections.forEach((s) => {
+          const t = s.translations['zh-TW'] || {};
+          const label = t.label || t.name || s.id;
+          wrap.appendChild(makeBtn(s.id, label));
+        });
+      }
+
+      function renderFaqRows() {
+        if (!state.content) return;
+        const tbody = $('#faqTbody');
+        const sectionMap = new Map(state.content.sections.map((s) => [s.id, s]));
+        const filtered = applyFilters(state.content.faqs);
+
+        if (filtered.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" class="empty-cell">沒有符合條件的 FAQ</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = filtered.map((faq) => renderFaqRow(faq, sectionMap)).join('');
+
+        // 綁定列內按鈕(M-B stub,M-C 才真的做 CRUD)
+        tbody.querySelectorAll('button[data-action]').forEach((btn) => {
+          btn.addEventListener('click', handleRowAction);
+        });
+      }
+
+      function renderFaqRow(faq, sectionMap) {
+        const section = sectionMap.get(faq.section);
+        const sectionLabel = section
+          ? ((section.translations['zh-TW'] && (section.translations['zh-TW'].label || section.translations['zh-TW'].name)) || faq.section)
+          : faq.section;
+        const zhTW = (faq.translations && faq.translations['zh-TW']) || {};
+        const question = zhTW.question || '(尚未翻譯)';
+
+        return (
+          '<tr data-faq-id="' + escapeHtml(faq.id) + '">' +
+            '<td class="col-num">' + escapeHtml(faq.number) + '</td>' +
+            '<td class="col-section" title="' + escapeHtml(sectionLabel) + '">' + escapeHtml(sectionLabel) + '</td>' +
+            '<td class="col-question" title="' + escapeHtml(question) + '">' + escapeHtml(question) + '</td>' +
+            '<td class="col-locales">' + renderLocaleDots(faq.translations) + '</td>' +
+            '<td class="col-updated">' + escapeHtml(formatDate(faq.updatedAt)) + '</td>' +
+            '<td class="col-actions">' +
+              '<button class="btn-row" type="button" data-action="edit" data-faq-id="' + escapeHtml(faq.id) + '">編輯</button>' +
+              '<button class="btn-row btn-danger" type="button" data-action="delete" data-faq-id="' + escapeHtml(faq.id) + '">刪除</button>' +
+            '</td>' +
+          '</tr>'
+        );
+      }
+
+      const LOCALES = ['zh-TW', 'zh-CN', 'en', 'vi'];
+      function renderLocaleDots(translations) {
+        return LOCALES.map((loc) => {
+          const t = (translations && translations[loc]) || {};
+          const hasQ = !!(t.question && String(t.question).trim());
+          const hasA = !!(t.answer && String(t.answer).trim());
+          let cls, status;
+          if (hasQ && hasA) { cls = 'dot-full';    status = '完整'; }
+          else if (hasQ || hasA) { cls = 'dot-partial'; status = '只有題目或答案'; }
+          else { cls = 'dot-empty';   status = '缺少'; }
+          return '<span class="dot ' + cls + '" title="' + loc + ':' + status + '"></span>';
+        }).join('');
+      }
+
+      function formatDate(ts) {
+        if (!ts) return '—';
+        const n = typeof ts === 'number' ? ts : Number(ts);
+        if (!Number.isFinite(n)) return '—';
+        const d = new Date(n);
+        if (Number.isNaN(d.getTime())) return '—';
+        const yyyy = d.getFullYear();
+        const mo = String(d.getMonth() + 1).padStart(2, '0');
+        const dd = String(d.getDate()).padStart(2, '0');
+        return yyyy + '-' + mo + '-' + dd;
+      }
+
+      function applyFilters(faqs) {
+        const q = (state.search || '').trim().toLowerCase();
+        const sf = state.sectionFilter;
+        return faqs.filter((faq) => {
+          if (sf && faq.section !== sf) return false;
+          if (!q) return true;
+          const zh = (faq.translations && faq.translations['zh-TW']) || {};
+          const text = [
+            faq.id, faq.number,
+            zh.question || '', zh.answer || ''
+          ].join(' ').toLowerCase();
+          return text.includes(q);
+        });
+      }
+
+      function handleRowAction(e) {
+        const btn = e.currentTarget;
+        const action = btn.dataset.action;
+        const faqId = btn.dataset.faqId;
+        if (action === 'edit') {
+          alert('編輯 ' + faqId.toUpperCase() + ' 的功能將於 Milestone C 完成,屆時跳出編輯表單。');
+        } else if (action === 'delete') {
+          alert('刪除 ' + faqId.toUpperCase() + ' 的功能將於 Milestone C 完成。');
+        }
       }
 
       // ============================================================
