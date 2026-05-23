@@ -63,7 +63,13 @@
       if (!user) return null;
       try {
         const snap = await _db.ref(`users/${user.uid}`).once('value');
-        return { ...this._normalizeUser(user), ...(snap.val() || {}) };
+        const profile = snap.val() || {};
+        // 防呆:Firebase Console 編輯欄位時尾隨空白會讓 role 比對失敗,
+        // 在這層統一 trim 字串欄位
+        ['role', 'tenantId', 'email', 'displayName'].forEach((k) => {
+          if (typeof profile[k] === 'string') profile[k] = profile[k].trim();
+        });
+        return { ...this._normalizeUser(user), ...profile };
       } catch (e) {
         console.warn('[authProvider] 讀取使用者 profile 失敗', e);
         return this._normalizeUser(user);
