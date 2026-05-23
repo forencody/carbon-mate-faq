@@ -490,7 +490,7 @@
   </main>
 
   <footer class="site-footer">
-    <p>由 <strong>成創永續 Carbon Mate</strong> 為元慶國際貿易製作 · <span id="footerYear"></span></p>
+    <p>由 <strong>成創永續 Carbon Mate</strong> 為元慶國際貿易製作 · <span id="footerYear"></span> · <span id="dataSource"></span></p>
   </footer>
 
   <button class="back-to-top" id="backToTop" aria-label="回到頂端">↑</button>
@@ -499,14 +499,17 @@
   <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/fuse.js@7/dist/fuse.min.js"></script>
+  <!-- Firebase(compat 版,v8 風格 API。未來 Phase C 整合 Carbon Mate 時可換成 modular SDK) -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-database-compat.js"></script>
 
   <script>
   (function () {
     'use strict';
 
     // ============================================================
-    // 設定:租戶資訊
-    // 注意:Phase 2 接 Firebase 後,這段會改成 dataProvider.getTenant()
+    // 設定:租戶資訊(多語系名稱目前仍走常數;Phase 2 起 meta 從 Firebase 讀)
     // ============================================================
     const TENANT = {
       id: 'anyking',
@@ -519,12 +522,61 @@
     };
 
     // ============================================================
+    // Firebase 初始化
+    // ============================================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyAxwx0LkRY0eAeNNSaySEkGdqvBuXWVPr8",
+      authDomain: "carbon-mate-faq-mvp.firebaseapp.com",
+      databaseURL: "https://carbon-mate-faq-mvp-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "carbon-mate-faq-mvp",
+      storageBucket: "carbon-mate-faq-mvp.firebasestorage.app",
+      messagingSenderId: "478581263378",
+      appId: "1:478581263378:web:58d80a59f0d16f05f7dccb"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const _auth = firebase.auth();
+    const _db = firebase.database();
+
+    // ============================================================
+    // authProvider — 抽象層
+    // Phase 2 訪客頁不會呼叫到 login/logout,但結構先建好給 Phase 3 admin.html 用
+    // Phase C 整合 Carbon Mate SSO 時,只需替換此物件,UI 程式碼一行不動
+    // ============================================================
+    const authProvider = {
+      async login(email, pwd) {
+        const cred = await _auth.signInWithEmailAndPassword(email, pwd);
+        return this._normalizeUser(cred.user);
+      },
+      async logout() {
+        return _auth.signOut();
+      },
+      async getCurrentUser() {
+        const user = _auth.currentUser;
+        if (!user) return null;
+        const snap = await _db.ref(`users/${user.uid}`).once('value');
+        return { ...this._normalizeUser(user), ...(snap.val() || {}) };
+      },
+      onAuthStateChanged(callback) {
+        return _auth.onAuthStateChanged((user) => {
+          callback(user ? this._normalizeUser(user) : null);
+        });
+      },
+      async resetPassword(email) {
+        return _auth.sendPasswordResetEmail(email);
+      },
+      _normalizeUser(fbUser) {
+        return { uid: fbUser.uid, email: fbUser.email };
+      }
+    };
+
+    // ============================================================
     // dataProvider — 抽象層
-    // Phase 1 實作:fetch locales/*.md
-    // Phase 2 將切換為 Firebase Realtime Database 讀取(不影響 UI)
+    // 策略:先試 Firebase,若 faqs 節點為空 fallback 到 locales/*.md
+    // 使用 .once('value') 一次性讀取(不用 .on('value') 即時監聽 — 遷移友善原則)
     // ============================================================
     const dataProvider = {
       _i18nConfig: null,
+      _source: null, // 'firebase' | 'locales' — 標記本次內容來源,供 UI 顯示
 
       async getI18nConfig() {
         if (this._i18nConfig) return this._i18nConfig;
@@ -534,14 +586,74 @@
         return this._i18nConfig;
       },
 
-      async getTenant(/* tenantId */) {
-        // Phase 1: 硬編碼;Phase 2 將從 Firebase tenants/<id>/meta 讀
-        return TENANT;
+      async getTenant(tenantId) {
+        try {
+          const snap = await _db.ref(`tenants/${tenantId}/meta`).once('value');
+          const meta = snap.val();
+          if (meta) {
+            return { id: tenantId, name: TENANT.name, meta };
+          }
+        } catch (e) {
+          console.warn('[dataProvider] getTenant 從 Firebase 失敗,使用本地常數', e);
+        }
+        return { id: tenantId, name: TENANT.name, meta: null };
       },
 
-      // 一次回傳「所有語系合併好」的 FAQ 結構,形狀刻意對齊未來 Firebase
-      // 回傳:{ sections: [{id, order, translations}], faqs: [{id, order, section, translations}], meta }
+      // 一次回傳「所有語系合併好」的 FAQ 結構
+      // 回傳:{ sections, faqs, metaByLocale }
       async getContent(tenantId) {
+        try {
+          const fromFB = await this._getContentFromFirebase(tenantId);
+          if (fromFB) {
+            this._source = 'firebase';
+            return fromFB;
+          }
+        } catch (e) {
+          console.warn('[dataProvider] 從 Firebase 讀取失敗,fallback 到 locales/*.md', e);
+        }
+        this._source = 'locales';
+        return this._getContentFromLocales();
+      },
+
+      async _getContentFromFirebase(tenantId) {
+        const [faqsSnap, sectionsSnap] = await Promise.all([
+          _db.ref(`tenants/${tenantId}/faqs`).once('value'),
+          _db.ref(`tenants/${tenantId}/sections`).once('value')
+        ]);
+        const faqsRaw = faqsSnap.val();
+        if (!faqsRaw || Object.keys(faqsRaw).length === 0) return null; // 空 → 由呼叫端 fallback
+
+        const sectionsRaw = sectionsSnap.val() || {};
+        const sections = Object.values(sectionsRaw)
+          .map((s) => ({
+            id: s.id,
+            order: s.order || 0,
+            translations: s.translations || {}
+          }))
+          .sort((a, b) => a.order - b.order);
+
+        const faqs = Object.values(faqsRaw)
+          .map((f) => ({
+            id: f.id,
+            number: f.number || (f.id ? f.id.toUpperCase() : ''),
+            order: f.order || 0,
+            section: f.section,
+            translations: f.translations || {}
+          }))
+          .sort((a, b) => {
+            if (a.section !== b.section) {
+              return sections.findIndex((s) => s.id === a.section) -
+                     sections.findIndex((s) => s.id === b.section);
+            }
+            return a.order - b.order;
+          });
+
+        // Phase 2 未把 intro 元資料寫入 Firebase,故 metaByLocale 為空,
+        // UI 端會 fallback 到通用標題(見 renderContent)
+        return { sections, faqs, metaByLocale: {} };
+      },
+
+      async _getContentFromLocales() {
         const cfg = await this.getI18nConfig();
         const fetches = cfg.locales.map(async (loc) => {
           const res = await fetch(`locales/${loc.file}`, { cache: 'no-cache' });
@@ -551,8 +663,46 @@
         });
         const parsedLocales = await Promise.all(fetches);
         return mergeLocales(parsedLocales);
+      },
+
+      // 一次性把 locales/*.md 寫入 Firebase。Console 用:
+      //   await CCS.dataProvider.seedFromLocales('anyking')
+      // 在 production rules 下需要先登入 super_admin。
+      async seedFromLocales(tenantId) {
+        if (!tenantId) throw new Error('tenantId required');
+        const fromLocales = await this._getContentFromLocales();
+        const updates = {};
+        const now = firebase.database.ServerValue.TIMESTAMP;
+
+        fromLocales.sections.forEach((sec) => {
+          updates[`tenants/${tenantId}/sections/${sec.id}`] = {
+            id: sec.id,
+            order: sec.order,
+            translations: sec.translations
+          };
+        });
+        fromLocales.faqs.forEach((faq) => {
+          updates[`tenants/${tenantId}/faqs/${faq.id}`] = {
+            id: faq.id,
+            number: faq.number,
+            order: faq.order,
+            section: faq.section,
+            translations: faq.translations,
+            createdAt: now,
+            updatedAt: now
+          };
+        });
+
+        await _db.ref().update(updates);
+        return {
+          sectionsSeeded: fromLocales.sections.length,
+          faqsSeeded: fromLocales.faqs.length
+        };
       }
     };
+
+    // 暴露到 window 給 console 操作用
+    window.CCS = { dataProvider, authProvider };
 
     // ============================================================
     // Markdown FAQ 解析
@@ -708,6 +858,18 @@
       $('#lastUpdated').textContent = `${label} ${yyyy}-${mo}-${dd} ${hh}:${mm}`;
     }
 
+    const DATA_SOURCE_LABEL = {
+      firebase: { 'zh-TW': '資料來源:Firebase', 'zh-CN': '资料来源:Firebase', 'en': 'Source: Firebase', 'vi': 'Nguồn: Firebase' },
+      locales:  { 'zh-TW': '資料來源:本地 seed', 'zh-CN': '资料来源:本地 seed', 'en': 'Source: Local seed', 'vi': 'Nguồn: Seed cục bộ' }
+    };
+    function setDataSource() {
+      const src = dataProvider._source;
+      const el = $('#dataSource');
+      if (!el) return;
+      if (!src) { el.textContent = ''; return; }
+      el.textContent = DATA_SOURCE_LABEL[src][state.currentLocale] || DATA_SOURCE_LABEL[src]['zh-TW'];
+    }
+
     function renderLocaleSwitcher() {
       const dropdown = $('#localeDropdown');
       dropdown.innerHTML = '';
@@ -788,19 +950,27 @@
       }[c]));
     }
 
+    const FALLBACK_INTRO_TITLES = {
+      'zh-TW': '供應商碳盤查現況調查問卷 FAQ',
+      'zh-CN': '供应商碳盘查现况调查问卷 FAQ',
+      'en':    'Supplier Carbon Inventory Survey FAQ',
+      'vi':    'FAQ Bảng khảo sát kiểm kê carbon nhà cung cấp'
+    };
+
     function renderContent() {
       const root = $('#content');
       const intro = state.content.metaByLocale[state.currentLocale] || {};
-      const tName = TENANT.name[state.currentLocale];
+      const fallbackTitle = FALLBACK_INTRO_TITLES[state.currentLocale] || FALLBACK_INTRO_TITLES['zh-TW'];
+      const hasMetaLine = intro.version || intro.based_on || intro.last_updated;
 
       let html = `<div class="intro">
-        <h1>${escapeHtml(intro.title || `${tName} ${state.i18nConfig.ui.searchPlaceholder[state.currentLocale]}`)}</h1>
+        <h1>${escapeHtml(intro.title || fallbackTitle)}</h1>
         ${intro.subtitle ? `<p>${escapeHtml(intro.subtitle)}</p>` : ''}
-        <div class="meta-line">
+        ${hasMetaLine ? `<div class="meta-line">
           ${intro.version ? `<span>${escapeHtml(intro.version)}</span>` : ''}
           ${intro.based_on ? `<span>${escapeHtml(intro.based_on)}</span>` : ''}
-          ${intro.last_updated ? `<span>${state.i18nConfig.ui.lastUpdated[state.currentLocale]}:${escapeHtml(intro.last_updated)}</span>` : ''}
-        </div>
+          ${intro.last_updated ? `<span>${escapeHtml(state.i18nConfig.ui.lastUpdated[state.currentLocale])}:${escapeHtml(intro.last_updated)}</span>` : ''}
+        </div>` : ''}
       </div>`;
 
       state.content.sections.forEach((sec) => {
@@ -879,6 +1049,7 @@
       buildFuseIndex();
       applyFilter();
       setLastUpdated();
+      setDataSource();
       if (anchor) {
         // 等下一個 tick 讓 DOM 完成
         requestAnimationFrame(() => handleHash(anchor, false));
@@ -991,6 +1162,7 @@
         buildFuseIndex();
         applyFilter();
         setLastUpdated();
+        setDataSource();
         // 若 URL 有錨點,重渲後重新對焦
         if (window.location.hash) {
           requestAnimationFrame(() => handleHash(window.location.hash, false));
@@ -1033,6 +1205,7 @@
       renderContent();
       buildFuseIndex();
       setLastUpdated();
+      setDataSource();
 
       // 3. 處理初始 hash
       if (window.location.hash) {
