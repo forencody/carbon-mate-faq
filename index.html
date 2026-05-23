@@ -848,7 +848,10 @@
         }
       } catch (err) {
         console.error(err);
-        alert('無法連線到後端伺服器,請稍後重試。');
+        const msg = state.i18nConfig && state.i18nConfig.ui.connectionError
+          ? (state.i18nConfig.ui.connectionError[state.currentLocale] || state.i18nConfig.ui.connectionError['zh-TW'])
+          : '無法連線到伺服器,請稍後再試。';
+        alert(msg);
       } finally {
         setTimeout(() => btn.classList.remove('spinning'), 400);
       }
@@ -988,7 +991,9 @@
       console.error(err);
       const loading = $('#loading');
       if (loading) {
-        loading.innerHTML = `<p>${escapeHtml('載入失敗,請稍後重新整理。')}</p>
+        // init 失敗時 i18nConfig 可能還沒載入,顯示四語系合併訊息以兼顧所有訪客
+        const fourLang = '載入失敗,請稍後重新整理。 / 加载失败,请稍后重新刷新。 / Failed to load. Please refresh later. / Không thể tải. Vui lòng làm mới sau.';
+        loading.innerHTML = `<p>${escapeHtml(fourLang)}</p>
           <p style="font-size:12px;color:var(--ccs-gray-400);">${escapeHtml(err.message)}</p>`;
       }
     });
