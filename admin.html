@@ -427,6 +427,225 @@
       color: var(--ccs-navy);
     }
 
+    /* ===== M-C:FAQ 編輯 modal ===== */
+    .modal-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(31,60,110,0.42);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 100;
+      padding: 20px;
+      animation: backdrop-in .15s ease-out;
+    }
+    @keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+
+    .modal {
+      background: var(--ccs-white);
+      border-radius: 12px;
+      box-shadow: var(--shadow-lg);
+      width: 100%; max-width: 720px;
+      max-height: calc(100vh - 40px);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      animation: modal-in .18s ease-out;
+    }
+    @keyframes modal-in {
+      from { opacity: 0; transform: translateY(-8px) scale(.985); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .modal-head {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--ccs-gray-100);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .modal-head h3 {
+      margin: 0; font-size: 16px; color: var(--ccs-navy); font-weight: 600;
+    }
+    .modal-close {
+      background: transparent; border: none; cursor: pointer;
+      color: var(--ccs-gray-400); font-size: 18px;
+      width: 32px; height: 32px; border-radius: 6px;
+      font-family: inherit;
+    }
+    .modal-close:hover { background: var(--ccs-gray-100); color: var(--ccs-navy); }
+
+    .modal-body {
+      padding: 18px 20px;
+      overflow-y: auto;
+      flex: 1 1 auto;
+    }
+    .modal-foot {
+      padding: 14px 20px;
+      border-top: 1px solid var(--ccs-gray-100);
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 12px; flex-wrap: wrap;
+    }
+    .modal-hint { font-size: 12px; color: var(--ccs-gray-400); }
+    .modal-hint.error { color: var(--color-danger); }
+    .modal-actions { display: flex; gap: 8px; }
+
+    /* 表單欄位 */
+    .form-row {
+      display: flex; gap: 12px; align-items: flex-end;
+      margin-bottom: 18px; flex-wrap: wrap;
+    }
+    .form-field {
+      display: flex; flex-direction: column; gap: 4px;
+      flex: 1 1 140px; min-width: 0;
+    }
+    .form-field > span {
+      font-size: 11px; font-weight: 500; color: var(--ccs-gray-600);
+      letter-spacing: .2px; text-transform: uppercase;
+    }
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      padding: 8px 12px;
+      border: 1px solid var(--ccs-gray-200);
+      border-radius: 6px;
+      font-size: 13.5px; font-family: inherit;
+      background: var(--ccs-white);
+      color: var(--ccs-gray-900);
+      transition: border-color .12s, box-shadow .12s;
+    }
+    .form-field input, .form-field select { height: 36px; }
+    .form-field textarea {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px; line-height: 1.6;
+      resize: vertical; min-height: 240px;
+    }
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      outline: none; border-color: var(--ccs-blue);
+      box-shadow: 0 0 0 3px rgba(49,101,167,.1);
+    }
+    .form-static {
+      height: 36px; padding: 8px 12px;
+      background: var(--ccs-gray-50);
+      border: 1px solid var(--ccs-gray-100);
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px; color: var(--ccs-gray-600);
+      display: flex; align-items: center;
+    }
+
+    /* 語系 tab */
+    .locale-tabs {
+      display: flex; gap: 2px;
+      padding: 3px;
+      background: var(--ccs-gray-100);
+      border-radius: 8px;
+      margin-bottom: 14px;
+    }
+    .locale-tab {
+      flex: 1;
+      border: none; background: transparent;
+      padding: 7px 8px;
+      font-size: 13px; color: var(--ccs-gray-600);
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background .12s, color .12s;
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .locale-tab:hover { color: var(--ccs-navy); }
+    .locale-tab.active {
+      background: var(--ccs-white); color: var(--ccs-navy);
+      font-weight: 500; box-shadow: var(--shadow-sm);
+    }
+    .locale-tab .dot-mini {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--ccs-gray-200);
+    }
+    .locale-tab.has-content .dot-mini { background: var(--ccs-blue); }
+
+    /* 回答區的預覽切換 */
+    .answer-head {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 4px;
+    }
+    .link-btn {
+      background: transparent; border: none; cursor: pointer;
+      font-size: 12px; color: var(--ccs-blue);
+      font-family: inherit; padding: 2px 6px;
+    }
+    .link-btn:hover { text-decoration: underline; }
+    .answer-preview {
+      min-height: 240px; padding: 14px 16px;
+      border: 1px solid var(--ccs-gray-200);
+      border-radius: 6px;
+      background: var(--ccs-gray-50);
+      font-size: 14px; line-height: 1.65;
+      overflow-y: auto;
+    }
+    .answer-preview > *:first-child { margin-top: 0; }
+    .answer-preview > *:last-child  { margin-bottom: 0; }
+    .answer-preview h1, .answer-preview h2, .answer-preview h3 {
+      color: var(--ccs-navy); margin: 12px 0 6px;
+    }
+    .answer-preview p { margin: 0 0 10px; }
+    .answer-preview ul, .answer-preview ol { padding-left: 22px; margin: 0 0 10px; }
+    .answer-preview strong { color: var(--ccs-navy); }
+    .answer-preview em { font-style: normal; color: var(--ccs-teal); font-weight: 500; }
+    .answer-preview code {
+      background: var(--ccs-gray-100); padding: 1px 5px;
+      border-radius: 4px; font-size: .92em;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .answer-preview blockquote {
+      margin: 8px 0; padding: 8px 12px;
+      border-left: 3px solid var(--ccs-teal);
+      background: var(--ccs-white);
+      color: var(--ccs-gray-600);
+      border-radius: 0 6px 6px 0;
+    }
+    .answer-preview a { color: var(--ccs-blue); text-decoration: underline; }
+
+    /* 次要按鈕 */
+    .btn-secondary {
+      height: 36px; padding: 0 16px;
+      background: var(--ccs-white); color: var(--ccs-gray-900);
+      border: 1px solid var(--ccs-gray-200);
+      border-radius: 8px;
+      font-size: 13px; cursor: pointer;
+      font-family: inherit;
+      transition: border-color .12s, color .12s;
+    }
+    .btn-secondary:hover { border-color: var(--ccs-navy); color: var(--ccs-navy); }
+    .btn-primary:disabled, .btn-secondary:disabled {
+      opacity: .5; cursor: not-allowed;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 24px; right: 24px;
+      background: var(--ccs-navy); color: var(--ccs-white);
+      padding: 11px 18px; border-radius: 8px;
+      box-shadow: var(--shadow-lg);
+      z-index: 200;
+      max-width: 400px;
+      font-size: 13.5px;
+      animation: toast-in .18s ease-out;
+    }
+    .toast.success { background: var(--color-success); }
+    .toast.error   { background: var(--color-danger); }
+    .toast.info    { background: var(--ccs-navy); }
+    @keyframes toast-in {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header 「使用者管理」連結 */
+    .header-link {
+      font-size: 13px; color: var(--ccs-gray-600);
+      padding: 6px 10px; border-radius: 6px;
+      transition: background .12s, color .12s;
+    }
+    .header-link:hover {
+      background: var(--ccs-gray-100); color: var(--ccs-navy);
+      text-decoration: none;
+    }
+
     /* ===== Responsive ===== */
     @media (max-width: 600px) {
       .admin-header { padding: 0 16px; gap: 8px; }
@@ -486,6 +705,7 @@
       <span class="brand-tenant">FAQ 管理後台</span>
     </a>
     <div class="header-tools">
+      <a class="header-link" id="userMgmtLink" href="#" hidden>使用者管理</a>
       <span class="user-info">
         <span id="userBadge" class="user-badge"></span>
         <span id="userEmail"></span>
@@ -560,7 +780,66 @@
     </section>
   </main>
 
+  <!-- FAQ 編輯 modal(M-C) -->
+  <div class="modal-backdrop" id="editorBackdrop" hidden>
+    <div class="modal" role="dialog" aria-labelledby="editorTitle" aria-modal="true">
+      <div class="modal-head">
+        <h3 id="editorTitle">編輯 FAQ</h3>
+        <button class="modal-close" id="editorCloseBtn" type="button" aria-label="關閉">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <label class="form-field" style="flex: 2 1 200px;">
+            <span>章節</span>
+            <select id="editSection"></select>
+          </label>
+          <label class="form-field" style="flex: 0 1 90px;">
+            <span>順序</span>
+            <input type="number" id="editOrder" min="1" step="1">
+          </label>
+          <div class="form-field" style="flex: 0 1 90px;">
+            <span>編號</span>
+            <div class="form-static" id="editFaqIdDisplay">—</div>
+          </div>
+        </div>
+
+        <div class="locale-tabs" id="editorLocaleTabs">
+          <button type="button" class="locale-tab active" data-locale="zh-TW"><span class="dot-mini"></span>繁中</button>
+          <button type="button" class="locale-tab" data-locale="zh-CN"><span class="dot-mini"></span>簡中</button>
+          <button type="button" class="locale-tab" data-locale="en"><span class="dot-mini"></span>English</button>
+          <button type="button" class="locale-tab" data-locale="vi"><span class="dot-mini"></span>Tiếng Việt</button>
+        </div>
+
+        <label class="form-field" style="margin-bottom: 14px;">
+          <span>題目</span>
+          <input type="text" id="editQuestion" placeholder="問題本文…">
+        </label>
+
+        <div class="form-field">
+          <div class="answer-head">
+            <span>回答(Markdown)</span>
+            <button type="button" class="link-btn" id="answerToggleBtn">預覽 ↻</button>
+          </div>
+          <textarea id="editAnswer" placeholder="支援 **粗體**、*斜體*、- 清單、&gt; 引用、`code` 等 Markdown 語法"></textarea>
+          <div class="answer-preview" id="editAnswerPreview" hidden></div>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <span class="modal-hint" id="editorHint"></span>
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="editorCancel">取消</button>
+          <button type="button" class="btn-primary" id="editorSave">儲存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" hidden></div>
+
   <!-- Vendor + 共用層 -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-database-compat.js"></script>
@@ -615,6 +894,33 @@
         search: '',
         sectionFilter: null     // null = 全部章節
       };
+
+      // ============================================================
+      // 編輯器狀態(M-C)
+      // ============================================================
+      const editor = {
+        mode: null,           // 'create' | 'edit' | null
+        faqId: null,
+        faqNumber: null,
+        currentLocale: 'zh-TW',
+        isPreview: false,
+        working: null,        // { section, order, translations }
+        initialJson: null     // JSON.stringify for dirty check
+      };
+
+      // ============================================================
+      // Toast 通知(M-C)
+      // ============================================================
+      let _toastTimer = null;
+      function showToast(msg, type, durationMs) {
+        const el = $('#toast');
+        if (!el) return;
+        el.textContent = msg;
+        el.className = 'toast ' + (type || 'success');
+        el.hidden = false;
+        clearTimeout(_toastTimer);
+        _toastTimer = setTimeout(() => { el.hidden = true; }, durationMs || 3200);
+      }
 
       // ============================================================
       // 友善錯誤訊息(避免直接顯示 Firebase 內部 code 給使用者)
@@ -724,7 +1030,48 @@
       });
 
       $('#addFaqBtn').addEventListener('click', () => {
-        alert('新增 FAQ 功能將於 Milestone C(M-C)完成,屆時會跳出編輯表單。');
+        if (!state.content) return;
+        openEditor('create');
+      });
+
+      // ============================================================
+      // 編輯 modal 事件(M-C)
+      // ============================================================
+      $('#editorCloseBtn').addEventListener('click', closeEditor);
+      $('#editorCancel').addEventListener('click', closeEditor);
+      $('#editorSave').addEventListener('click', saveEditor);
+      $('#editorBackdrop').addEventListener('click', (e) => {
+        if (e.target === $('#editorBackdrop')) closeEditor();
+      });
+      $('#editorLocaleTabs').addEventListener('click', (e) => {
+        const tab = e.target.closest('.locale-tab');
+        if (!tab) return;
+        switchEditorTab(tab.dataset.locale);
+      });
+      $('#answerToggleBtn').addEventListener('click', togglePreview);
+      $('#editQuestion').addEventListener('input', () => {
+        saveCurrentLocaleFromInputs();
+        updateLocaleTabDots();
+      });
+      $('#editAnswer').addEventListener('input', () => {
+        saveCurrentLocaleFromInputs();
+        updateLocaleTabDots();
+      });
+      $('#editSection').addEventListener('change', () => {
+        if (editor.working) editor.working.section = $('#editSection').value;
+      });
+      $('#editOrder').addEventListener('input', () => {
+        if (editor.working) editor.working.order = parseInt($('#editOrder').value, 10) || 0;
+      });
+      document.addEventListener('keydown', (e) => {
+        const backdrop = $('#editorBackdrop');
+        if (e.key === 'Escape' && backdrop && !backdrop.hidden) closeEditor();
+      });
+
+      // 使用者管理連結(tenant_admin / super_admin 可見)
+      $('#userMgmtLink').addEventListener('click', (e) => {
+        e.preventDefault();
+        openUserMgmtInfo();
       });
 
       // ============================================================
@@ -741,6 +1088,7 @@
         $('#userEmail').textContent = user.email || '';
         $('#userBadge').textContent = ROLE_LABEL[user.role] || '?';
         $('#userBadge').className = `user-badge role-${user.role || 'unknown'}`;
+        $('#userMgmtLink').hidden = !authProvider.canManageUsers(user);
         showHeader(true);
 
         // 依角色分流
@@ -966,11 +1314,270 @@
         const btn = e.currentTarget;
         const action = btn.dataset.action;
         const faqId = btn.dataset.faqId;
-        if (action === 'edit') {
-          alert('編輯 ' + faqId.toUpperCase() + ' 的功能將於 Milestone C 完成,屆時跳出編輯表單。');
-        } else if (action === 'delete') {
-          alert('刪除 ' + faqId.toUpperCase() + ' 的功能將於 Milestone C 完成。');
+        const faq = state.content && state.content.faqs.find((f) => f.id === faqId);
+        if (!faq) {
+          showToast('找不到 FAQ:' + faqId, 'error');
+          return;
         }
+        if (action === 'edit') {
+          openEditor('edit', faq);
+        } else if (action === 'delete') {
+          deleteFaqWithConfirm(faq);
+        }
+      }
+
+      // ============================================================
+      // 編輯器邏輯(M-C)
+      // ============================================================
+      function openEditor(mode, faq) {
+        if (!state.content) return;
+
+        if (mode === 'edit' && faq) {
+          editor.mode = 'edit';
+          editor.faqId = faq.id;
+          editor.faqNumber = faq.number;
+          editor.working = {
+            section: faq.section || (state.content.sections[0] && state.content.sections[0].id) || '',
+            order: Number(faq.order) || 1,
+            translations: {
+              'zh-TW': clonePart(faq.translations && faq.translations['zh-TW']),
+              'zh-CN': clonePart(faq.translations && faq.translations['zh-CN']),
+              'en':    clonePart(faq.translations && faq.translations['en']),
+              'vi':    clonePart(faq.translations && faq.translations['vi'])
+            }
+          };
+          $('#editorTitle').textContent = '編輯 ' + faq.number;
+        } else {
+          const next = dataProvider.nextFaqId(state.content.faqs);
+          editor.mode = 'create';
+          editor.faqId = next.id;
+          editor.faqNumber = next.number;
+          const defaultSection = state.sectionFilter ||
+            (state.content.sections[0] && state.content.sections[0].id) || '';
+          editor.working = {
+            section: defaultSection,
+            order: next.order,
+            translations: {
+              'zh-TW': { question: '', answer: '' },
+              'zh-CN': { question: '', answer: '' },
+              'en':    { question: '', answer: '' },
+              'vi':    { question: '', answer: '' }
+            }
+          };
+          $('#editorTitle').textContent = '新增 FAQ(' + next.number + ')';
+        }
+
+        editor.currentLocale = 'zh-TW';
+        editor.isPreview = false;
+        editor.initialJson = JSON.stringify(editor.working);
+
+        populateSectionDropdown();
+        $('#editSection').value = editor.working.section;
+        $('#editOrder').value = editor.working.order;
+        $('#editFaqIdDisplay').textContent = editor.faqNumber;
+
+        document.querySelectorAll('#editorLocaleTabs .locale-tab').forEach((b) => {
+          b.classList.toggle('active', b.dataset.locale === 'zh-TW');
+        });
+        loadLocaleIntoInputs('zh-TW');
+        updateLocaleTabDots();
+
+        $('#editorHint').textContent = '';
+        $('#editorHint').className = 'modal-hint';
+
+        $('#editAnswer').hidden = false;
+        $('#editAnswerPreview').hidden = true;
+        $('#answerToggleBtn').textContent = '預覽 ↻';
+
+        $('#editorBackdrop').hidden = false;
+        setTimeout(() => $('#editQuestion').focus(), 50);
+      }
+
+      function clonePart(t) {
+        return {
+          question: (t && t.question) || '',
+          answer:   (t && t.answer)   || ''
+        };
+      }
+
+      function populateSectionDropdown() {
+        const sel = $('#editSection');
+        sel.innerHTML = '';
+        state.content.sections.forEach((s) => {
+          const opt = document.createElement('option');
+          opt.value = s.id;
+          const t = (s.translations && s.translations['zh-TW']) || {};
+          opt.textContent = (t.label || t.name || s.id) + ' (' + s.id + ')';
+          sel.appendChild(opt);
+        });
+      }
+
+      function saveCurrentLocaleFromInputs() {
+        if (!editor.working) return;
+        editor.working.translations[editor.currentLocale] = {
+          question: $('#editQuestion').value,
+          answer:   $('#editAnswer').value
+        };
+      }
+
+      function loadLocaleIntoInputs(locale) {
+        if (!editor.working) return;
+        const t = editor.working.translations[locale] || { question: '', answer: '' };
+        $('#editQuestion').value = t.question || '';
+        $('#editAnswer').value = t.answer || '';
+      }
+
+      function updateLocaleTabDots() {
+        if (!editor.working) return;
+        document.querySelectorAll('#editorLocaleTabs .locale-tab').forEach((tab) => {
+          const loc = tab.dataset.locale;
+          const t = editor.working.translations[loc] || {};
+          const hasContent = !!((t.question && t.question.trim()) || (t.answer && t.answer.trim()));
+          tab.classList.toggle('has-content', hasContent);
+        });
+      }
+
+      function switchEditorTab(locale) {
+        saveCurrentLocaleFromInputs();
+        if (editor.isPreview) togglePreview();
+        editor.currentLocale = locale;
+        document.querySelectorAll('#editorLocaleTabs .locale-tab').forEach((b) => {
+          b.classList.toggle('active', b.dataset.locale === locale);
+        });
+        loadLocaleIntoInputs(locale);
+      }
+
+      function togglePreview() {
+        saveCurrentLocaleFromInputs();
+        editor.isPreview = !editor.isPreview;
+        const btn = $('#answerToggleBtn');
+        const textarea = $('#editAnswer');
+        const preview = $('#editAnswerPreview');
+        if (editor.isPreview) {
+          const md = textarea.value || '_(無內容)_';
+          const html = window.DOMPurify.sanitize(
+            window.marked.parse(md, { gfm: true, breaks: false })
+          );
+          preview.innerHTML = html;
+          textarea.hidden = true;
+          preview.hidden = false;
+          btn.textContent = '編輯 ✎';
+        } else {
+          textarea.hidden = false;
+          preview.hidden = true;
+          btn.textContent = '預覽 ↻';
+        }
+      }
+
+      function closeEditor() {
+        saveCurrentLocaleFromInputs();
+        const currentJson = JSON.stringify(editor.working);
+        if (editor.initialJson !== null && currentJson !== editor.initialJson) {
+          if (!confirm('有未儲存的變更,確定要關閉嗎?')) return;
+        }
+        closeEditorForce();
+      }
+
+      function closeEditorForce() {
+        $('#editorBackdrop').hidden = true;
+        editor.mode = null;
+        editor.faqId = null;
+        editor.faqNumber = null;
+        editor.working = null;
+        editor.initialJson = null;
+        editor.isPreview = false;
+      }
+
+      async function saveEditor() {
+        saveCurrentLocaleFromInputs();
+
+        const zhTW = (editor.working && editor.working.translations['zh-TW']) || {};
+        const hint = $('#editorHint');
+
+        if (!zhTW.question || !zhTW.question.trim()) {
+          hint.textContent = '繁中題目為必填欄位';
+          hint.className = 'modal-hint error';
+          switchEditorTab('zh-TW');
+          $('#editQuestion').focus();
+          return;
+        }
+        if (!editor.working.section) {
+          hint.textContent = '請選擇章節';
+          hint.className = 'modal-hint error';
+          return;
+        }
+        if (!(editor.working.order >= 1)) {
+          hint.textContent = '順序必須為大於等於 1 的整數';
+          hint.className = 'modal-hint error';
+          return;
+        }
+        hint.textContent = '';
+        hint.className = 'modal-hint';
+
+        const saveBtn = $('#editorSave');
+        saveBtn.disabled = true;
+        saveBtn.textContent = '儲存中…';
+        try {
+          if (editor.mode === 'create') {
+            await dataProvider.createFaq(state.tenantId, {
+              id: editor.faqId,
+              number: editor.faqNumber,
+              order: editor.working.order,
+              section: editor.working.section,
+              translations: editor.working.translations
+            });
+            showToast('已新增 ' + editor.faqNumber + ',訪客頁需重新整理才會看到', 'success');
+          } else {
+            await dataProvider.updateFaq(state.tenantId, editor.faqId, {
+              number: editor.faqNumber,
+              order: editor.working.order,
+              section: editor.working.section,
+              translations: editor.working.translations
+            });
+            showToast('已儲存 ' + editor.faqNumber + ',訪客頁需重新整理才會看到', 'success');
+          }
+          closeEditorForce();
+          await renderFaqList(state.tenantId, state.user);
+        } catch (err) {
+          console.error(err);
+          hint.textContent = '儲存失敗:' + (err.message || String(err));
+          hint.className = 'modal-hint error';
+        } finally {
+          saveBtn.disabled = false;
+          saveBtn.textContent = '儲存';
+        }
+      }
+
+      async function deleteFaqWithConfirm(faq) {
+        const number = faq.number || faq.id;
+        const zhTW = (faq.translations && faq.translations['zh-TW']) || {};
+        const preview = (zhTW.question || '(無題目)').slice(0, 60);
+        const msg =
+          '確定要刪除 ' + number + ' 嗎?\n\n' +
+          '「' + preview + '」\n\n' +
+          '此動作無法復原。';
+        if (!confirm(msg)) return;
+        try {
+          await dataProvider.deleteFaq(state.tenantId, faq.id);
+          showToast('已刪除 ' + number, 'success');
+          await renderFaqList(state.tenantId, state.user);
+        } catch (err) {
+          console.error(err);
+          showToast('刪除失敗:' + (err.message || String(err)), 'error');
+        }
+      }
+
+      function openUserMgmtInfo() {
+        const msg =
+          '使用者管理\n\n' +
+          'MVP 階段尚未在介面內提供新增使用者功能,請聯絡成創團隊代為操作。\n\n' +
+          '需要新增 / 修改 / 停用使用者帳號時,請提供:\n' +
+          '  • Email、姓名\n' +
+          '  • 希望的角色:\n' +
+          '    - tenant_admin(管理人):可編輯 FAQ + 將來可管使用者\n' +
+          '    - tenant_user(使用者):僅可編輯 FAQ\n\n' +
+          '未來整合 Carbon Mate 主平台後,將可於 Carbon Mate 後台直接管理使用者,不需透過成創。';
+        alert(msg);
       }
 
       // ============================================================

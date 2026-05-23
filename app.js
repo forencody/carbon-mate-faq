@@ -219,13 +219,54 @@
         sectionsSeeded: fromLocales.sections.length,
         faqsSeeded: fromLocales.faqs.length
       };
-    }
+    },
 
-    // Phase 3 Milestone B/C 將加入:
-    //   createFaq(tenantId, faq)
-    //   updateFaq(tenantId, faqId, partial)
-    //   deleteFaq(tenantId, faqId)
-    //   listTenants() — super_admin only
+    // ============================================================
+    // Phase 3 M-C:CRUD
+    // ============================================================
+    // 從現有 faqs 推導下一個可用 ID(避開資料庫 round-trip)
+    // 規則:取所有 qN 中最大的 N,新 ID = q(max+1)
+    nextFaqId(existingFaqs) {
+      let max = 0;
+      (existingFaqs || []).forEach((f) => {
+        const m = String(f.id || '').match(/^q(\d+)$/i);
+        if (m) max = Math.max(max, parseInt(m[1], 10));
+      });
+      const n = max + 1;
+      return { id: 'q' + n, number: 'Q' + n, order: n };
+    },
+
+    async createFaq(tenantId, faq) {
+      if (!tenantId) throw new Error('tenantId required');
+      if (!faq || !faq.id) throw new Error('faq.id required');
+      const now = firebase.database.ServerValue.TIMESTAMP;
+      const payload = {
+        id:           faq.id,
+        number:       faq.number || faq.id.toUpperCase(),
+        order:        Number(faq.order) || 0,
+        section:      faq.section,
+        translations: faq.translations || {},
+        createdAt:    now,
+        updatedAt:    now
+      };
+      await _db.ref(`tenants/${tenantId}/faqs/${faq.id}`).set(payload);
+      return faq.id;
+    },
+
+    async updateFaq(tenantId, faqId, partial) {
+      if (!tenantId || !faqId) throw new Error('tenantId 與 faqId 必填');
+      // 不允許覆蓋 id / createdAt
+      const updates = Object.assign({}, partial);
+      delete updates.id;
+      delete updates.createdAt;
+      updates.updatedAt = firebase.database.ServerValue.TIMESTAMP;
+      await _db.ref(`tenants/${tenantId}/faqs/${faqId}`).update(updates);
+    },
+
+    async deleteFaq(tenantId, faqId) {
+      if (!tenantId || !faqId) throw new Error('tenantId 與 faqId 必填');
+      await _db.ref(`tenants/${tenantId}/faqs/${faqId}`).remove();
+    }
   };
 
   // ============================================================
