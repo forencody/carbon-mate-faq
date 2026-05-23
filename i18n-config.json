@@ -1,0 +1,93 @@
+{
+  "defaultLocale": "zh-TW",
+  "locales": [
+    {
+      "code": "zh-TW",
+      "name": "繁體中文",
+      "nativeName": "繁體中文",
+      "file": "faq-zh-TW.md",
+      "dir": "ltr",
+      "flag": "🇹🇼"
+    },
+    {
+      "code": "zh-CN",
+      "name": "简体中文",
+      "nativeName": "简体中文",
+      "file": "faq-zh-CN.md",
+      "dir": "ltr",
+      "flag": "🇨🇳"
+    },
+    {
+      "code": "en",
+      "name": "English",
+      "nativeName": "English",
+      "file": "faq-en.md",
+      "dir": "ltr",
+      "flag": "🇺🇸"
+    },
+    {
+      "code": "vi",
+      "name": "Tiếng Việt",
+      "nativeName": "Tiếng Việt",
+      "file": "faq-vi.md",
+      "dir": "ltr",
+      "flag": "🇻🇳"
+    }
+  ],
+  "ui": {
+    "languageSwitcher": {
+      "zh-TW": "語言",
+      "zh-CN": "语言",
+      "en": "Language",
+      "vi": "Ngôn ngữ"
+    },
+    "searchPlaceholder": {
+      "zh-TW": "搜尋問題或關鍵字…",
+      "zh-CN": "搜索问题或关键字…",
+      "en": "Search questions or keywords…",
+      "vi": "Tìm kiếm câu hỏi hoặc từ khóa…"
+    },
+    "tableOfContents": {
+      "zh-TW": "目錄",
+      "zh-CN": "目录",
+      "en": "Table of Contents",
+      "vi": "Mục lục"
+    },
+    "noResults": {
+      "zh-TW": "找不到相關問題",
+      "zh-CN": "找不到相关问题",
+      "en": "No matching questions found",
+      "vi": "Không tìm thấy câu hỏi phù hợp"
+    },
+    "backToTop": {
+      "zh-TW": "回到頂端",
+      "zh-CN": "回到顶部",
+      "en": "Back to top",
+      "vi": "Lên đầu trang"
+    },
+    "lastUpdated": {
+      "zh-TW": "最後更新",
+      "zh-CN": "最后更新",
+      "en": "Last updated",
+      "vi": "Cập nhật lần cuối"
+    }
+  },
+  "shared": {
+    "anchorPattern": "qN",
+    "sectionAnchors": [
+      "general",
+      "basic-info",
+      "product-list",
+      "path-routing",
+      "iso14064",
+      "iso14067",
+      "supplementary",
+      "targets-actions",
+      "cooperation",
+      "attachments",
+      "resources"
+    ],
+    "questionCount": 44,
+    "consistencyNote": "All four language versions share identical question numbering (Q1-Q44) and section IDs. URLs like /faq/[locale]#q24 work across all locales."
+  }
+}

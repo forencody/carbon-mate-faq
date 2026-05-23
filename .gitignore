@@ -1,0 +1,156 @@
+# ============================================
+# Carbon Mate FAQ 專案 .gitignore
+# ============================================
+
+# ---------- macOS ----------
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# ---------- Windows ----------
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ---------- Linux ----------
+*~
+.directory
+.Trash-*
+
+# ---------- IDE / 編輯器 ----------
+# VS Code
+.vscode/
+*.code-workspace
+
+# JetBrains (WebStorm, IntelliJ)
+.idea/
+*.iml
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+\#*\#
+.\#*
+
+# ---------- 系統暫存 / 日誌 ----------
+*.log
+logs/
+tmp/
+temp/
+*.tmp
+*.bak
+*.backup
+*.orig
+
+# ---------- Node.js(本專案不用,但保險起見擋掉) ----------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+.npm/
+.yarn/
+
+# ---------- Python(若用 python -m http.server 預覽) ----------
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.Python
+
+# ---------- 環境變數與密鑰(重要,絕對不能 commit) ----------
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+secrets.json
+firebase-service-account.json
+firebase-admin-sdk*.json
+serviceAccountKey.json
+
+# ---------- Firebase ----------
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+.firebaserc
+
+# ---------- 本機測試與草稿 ----------
+# 開發過程中的草稿檔(不要 commit 半成品)
+*.draft.*
+*.test.html
+scratch/
+sandbox/
+playground/
+
+# 本機資料庫匯出(可能含敏感資料)
+*.sql
+*.db
+*.sqlite
+firebase-export-*/
+backup-*/
+
+# ---------- Claude Code 工作檔(部分要保留) ----------
+# Claude Code 的 session 暫存(不需要 commit)
+.claude/cache/
+.claude/tmp/
+# 本機權限設定(每台機器不同,不該 commit)
+.claude/settings.local.json
+
+# 但 .claude/SESSION_NOTES.md 要保留(跨裝置交接用)
+# 不在這裡擋,因為要保留
+
+# ---------- 圖片/影片原始大檔(若有) ----------
+# 通常 assets/ 內的素材會 commit,但原始 PSD/AI 不要
+*.psd
+*.ai
+*.sketch
+*.fig
+
+# 大型影片(若不小心放進來)
+*.mov
+*.mp4
+*.avi
+
+# ---------- 文件編輯軟體暫存 ----------
+~$*.docx
+~$*.xlsx
+~$*.pptx
+.~lock.*
+
+# ---------- 壓縮檔(通常不該 commit) ----------
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# ---------- 內部素材庫(非網站資產) ----------
+# 設計檔、原始素材、客戶資料夾等,不上 GitHub Pages
+FAQ工具開發資產庫/
+
+# ---------- 其他 ----------
+# 個人筆記(若你會在專案內寫私人 todo)
+TODO.local.md
+NOTES.local.md
+my-*.md
+
+# 部署設定的本機覆寫(若有)
+deploy.local.sh
+config.local.js
