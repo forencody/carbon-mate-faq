@@ -105,23 +105,60 @@
       background: no-repeat center/contain url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B6E73' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><line x1='21' y1='21' x2='16.65' y2='16.65'/></svg>");
     }
 
-    .locale-switcher {
-      display: flex; gap: 2px;
-      padding: 3px; background: var(--ccs-gray-100);
-      border-radius: 999px;
+    .locale-menu { position: relative; }
+    .locale-trigger {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 38px; height: 38px; padding: 0;
+      border: 1px solid var(--ccs-gray-200);
+      background: var(--ccs-white);
+      border-radius: 8px;
+      cursor: pointer; color: var(--ccs-gray-600);
+      transition: border-color .15s, color .15s, background .15s;
     }
-    .locale-switcher button {
-      border: none; background: transparent; cursor: pointer;
-      padding: 6px 12px; border-radius: 999px;
-      font-size: 13px; font-weight: 500; color: var(--ccs-gray-600);
-      font-family: inherit;
-      transition: background .15s, color .15s;
+    .locale-trigger:hover {
+      border-color: var(--ccs-blue); color: var(--ccs-blue);
     }
-    .locale-switcher button:hover { color: var(--ccs-navy); }
-    .locale-switcher button.active {
-      background: var(--ccs-white); color: var(--ccs-navy);
-      box-shadow: var(--shadow-sm);
+    .locale-trigger[aria-expanded="true"] {
+      border-color: var(--ccs-blue); color: var(--ccs-blue);
+      background: rgba(49,101,167,.06);
     }
+    .locale-trigger svg { width: 18px; height: 18px; display: block; }
+
+    .locale-dropdown {
+      position: absolute; top: calc(100% + 6px); right: 0;
+      list-style: none; margin: 0; padding: 6px;
+      min-width: 170px;
+      background: var(--ccs-white);
+      border: 1px solid var(--ccs-gray-200);
+      border-radius: 10px;
+      box-shadow: var(--shadow-md);
+      z-index: 70;
+      animation: dropdown-in .12s ease-out;
+    }
+    @keyframes dropdown-in {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .locale-dropdown[hidden] { display: none; }
+    .locale-dropdown li { margin: 0; }
+    .locale-dropdown button {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; padding: 9px 12px;
+      border: none; background: transparent;
+      font-family: inherit; font-size: 14px; color: var(--ccs-gray-900);
+      cursor: pointer; border-radius: 6px;
+      text-align: left;
+      transition: background .12s, color .12s;
+    }
+    .locale-dropdown button:hover { background: var(--ccs-gray-50); }
+    .locale-dropdown button.active {
+      background: rgba(49,101,167,.08); color: var(--ccs-blue); font-weight: 500;
+    }
+    .locale-dropdown .locale-check {
+      font-size: 14px; color: var(--ccs-blue); opacity: 0;
+      margin-left: 12px; line-height: 1;
+    }
+    .locale-dropdown button.active .locale-check { opacity: 1; }
 
     .refresh-btn {
       display: flex; align-items: center; gap: 8px;
@@ -396,7 +433,6 @@
       .intro h1 { font-size: 19px; }
     }
     @media (max-width: 600px) {
-      .locale-switcher button { padding: 5px 8px; font-size: 12px; }
       .refresh-btn { padding: 6px 8px; }
       .qcard-head { padding: 12px 14px; gap: 10px; }
       .qcard-body { padding: 0 14px 14px; font-size: 14px; }
@@ -404,7 +440,7 @@
 
     /* === Print === */
     @media print {
-      .site-header, .sidebar, .back-to-top, .refresh-btn, .nav-toggle, .locale-switcher, .search { display: none !important; }
+      .site-header, .sidebar, .back-to-top, .refresh-btn, .nav-toggle, .locale-menu, .search { display: none !important; }
       .layout { grid-template-columns: 1fr; padding: 0; max-width: none; }
       .qcard { break-inside: avoid; border: 1px solid #ccc; box-shadow: none; }
       .qcard-body { display: block !important; }
@@ -425,7 +461,16 @@
       <div class="search" id="searchWrap">
         <input type="search" id="searchInput" placeholder="搜尋問題或關鍵字…" autocomplete="off">
       </div>
-      <div class="locale-switcher" id="localeSwitcher" role="tablist"></div>
+      <div class="locale-menu" id="localeMenu">
+        <button class="locale-trigger" id="localeTrigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </button>
+        <ul class="locale-dropdown" id="localeDropdown" role="menu" hidden></ul>
+      </div>
       <button class="refresh-btn" id="refreshBtn" title="重新整理">
         <span class="refresh-icon">↻</span>
         <span class="last-updated" id="lastUpdated"></span>
@@ -654,25 +699,45 @@
 
     function setLastUpdated() {
       const t = state.loadedAt || new Date();
+      const yyyy = t.getFullYear();
+      const mo = String(t.getMonth() + 1).padStart(2, '0');
+      const dd = String(t.getDate()).padStart(2, '0');
       const hh = String(t.getHours()).padStart(2, '0');
       const mm = String(t.getMinutes()).padStart(2, '0');
       const label = state.i18nConfig.ui.lastUpdated[state.currentLocale];
-      $('#lastUpdated').textContent = `${label} ${hh}:${mm}`;
+      $('#lastUpdated').textContent = `${label} ${yyyy}-${mo}-${dd} ${hh}:${mm}`;
     }
 
     function renderLocaleSwitcher() {
-      const wrap = $('#localeSwitcher');
-      wrap.innerHTML = '';
+      const dropdown = $('#localeDropdown');
+      dropdown.innerHTML = '';
       state.i18nConfig.locales.forEach((loc) => {
+        const li = document.createElement('li');
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.dataset.locale = loc.code;
-        btn.textContent = loc.nativeName;
-        btn.setAttribute('role', 'tab');
+        btn.setAttribute('role', 'menuitem');
+        btn.innerHTML = `<span>${escapeHtml(loc.nativeName)}</span><span class="locale-check" aria-hidden="true">✓</span>`;
         if (loc.code === state.currentLocale) btn.classList.add('active');
-        btn.addEventListener('click', () => switchLocale(loc.code));
-        wrap.appendChild(btn);
+        btn.addEventListener('click', () => {
+          switchLocale(loc.code);
+          closeLocaleMenu();
+        });
+        li.appendChild(btn);
+        dropdown.appendChild(li);
       });
+    }
+
+    function openLocaleMenu() {
+      $('#localeDropdown').hidden = false;
+      $('#localeTrigger').setAttribute('aria-expanded', 'true');
+    }
+    function closeLocaleMenu() {
+      $('#localeDropdown').hidden = true;
+      $('#localeTrigger').setAttribute('aria-expanded', 'false');
+    }
+    function toggleLocaleMenu() {
+      $('#localeDropdown').hidden ? openLocaleMenu() : closeLocaleMenu();
     }
 
     function renderBrand() {
@@ -804,7 +869,7 @@
       // 保留錨點
       const anchor = window.location.hash;
       state.currentLocale = code;
-      document.querySelectorAll('#localeSwitcher button').forEach((b) => {
+      document.querySelectorAll('#localeDropdown button').forEach((b) => {
         b.classList.toggle('active', b.dataset.locale === code);
       });
       renderBrand();
@@ -1001,11 +1066,21 @@
     // 事件綁定
     // ============================================================
     function bindEvents() {
-      // 語系記憶(switchLocale 已 wrap 在 init 後;但首次 click 時間點問題,改為直接攔截)
-      $('#localeSwitcher').addEventListener('click', (e) => {
+      // 語系記憶 + 下拉觸發
+      $('#localeTrigger').addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleLocaleMenu();
+      });
+      $('#localeDropdown').addEventListener('click', (e) => {
         const btn = e.target.closest('button[data-locale]');
         if (!btn) return;
         try { localStorage.setItem('ccs.faq.locale', btn.dataset.locale); } catch (_) {}
+      });
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('#localeMenu')) closeLocaleMenu();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLocaleMenu();
       });
 
       // 搜尋
