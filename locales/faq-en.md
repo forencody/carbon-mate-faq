@@ -49,7 +49,7 @@ sections:
 
 ---
 
-## General: Overall questions before filling out {#general}
+## General: Before you start {#general}
 
 ### Q1. Our company has never conducted a carbon inventory. Do we really need to complete this survey? {#q1}
 
@@ -109,7 +109,7 @@ Per the survey, the data will be used for five purposes:
 
 ---
 
-## Sections 1–2: Basic information questions {#basic-info}
+## Sections 1–2: Basic information {#basic-info}
 
 ### Q7. Does B-3 "Company Size" refer to a single entity or group consolidation? {#q7}
 
@@ -152,7 +152,7 @@ The key requirement: this person must be able to coordinate cross-departmental r
 
 ---
 
-## Section 3: Product / raw material inventory questions {#product-list}
+## Section 3: Product / raw material inventory {#product-list}
 
 ### Q12. C-1 says "one row per independent SKU," but we supply 50 SKUs to ANYKING. Do we list all of them? {#q12}
 
@@ -188,7 +188,7 @@ ANYKING will evaluate holistically and will not reject responses simply because 
 
 ---
 
-## Section 4: Path routing questions {#path-routing}
+## Section 4: Path routing {#path-routing}
 
 ### Q16. What is the difference between SBTi "Validated" and "Committed but not yet validated"? Which one qualifies for D-1 Path ①? {#q16}
 
@@ -220,7 +220,7 @@ Recommendation: select **Path ③**, then:
 
 ---
 
-## Section 5: ISO 14064-1 organizational inventory questions {#iso14064}
+## Section 5: ISO 14064-1 organizational inventory {#iso14064}
 
 ### Q19. Our inventory was conducted in 2022. Does that count as "within the past 2 years"? {#q19}
 
@@ -272,7 +272,7 @@ If you only have value data, fill in the range under the value tier and mark the
 
 ---
 
-## Section 6: ISO 14067 product carbon footprint questions {#iso14067}
+## Section 6: ISO 14067 product carbon footprint {#iso14067}
 
 ### Q24. What is a "Functional Unit" in F-2? If our product is a 1 kg chemical, is the FU simply 1 kg? {#q24}
 
@@ -333,7 +333,7 @@ Both must be completed — each serves a different allocation purpose.
 
 ---
 
-## Section 7: Supplementary information (activity data) questions {#supplementary}
+## Section 7: Supplementary information (activity data) {#supplementary}
 
 ### Q29. Section 7 is marked "optional." Can we really skip it? {#q29}
 
@@ -382,7 +382,7 @@ If your product has a defined BOM, the BOM weight ratio is also acceptable — *
 
 ---
 
-## Sections 8–9: Reduction targets and measures questions {#targets-actions}
+## Sections 8–9: Reduction targets and measures {#targets-actions}
 
 ### Q34. For G-1 "Reduction Target," we have an energy-saving plan but no formal reduction target. What should we select? {#q34}
 
@@ -429,7 +429,7 @@ Don't worry about misselection — this is preliminary screening; subsequent inv
 
 ---
 
-## Section 10: Cooperation willingness and coaching needs questions {#cooperation}
+## Section 10: Cooperation willingness and coaching needs {#cooperation}
 
 ### Q38. Will selecting "Limited cooperation" in I-1 be interpreted by ANYKING as non-cooperation? {#q38}
 
@@ -463,7 +463,7 @@ If you want to evaluate before deciding, "Need detailed information and quotatio
 
 ---
 
-## Sections 11–12: Attachments and declaration questions {#attachments}
+## Sections 11–12: Attachments and declaration {#attachments}
 
 ### Q41. We can't obtain the ISO 14064-1 certificate at the moment (group is still consolidating). How do we fill in the attachment checklist? {#q41}
 

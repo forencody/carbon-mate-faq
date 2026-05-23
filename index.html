@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carbon Mate × 元慶國際貿易 — 供應商碳盤查 FAQ</title>
+  <meta name="description" content="元慶國際貿易供應商碳盤查現況調查問卷 FAQ — 由成創永續 Carbon Mate 提供。">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans:wght@400;500;700&family=Noto+Sans+Vietnamese:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ccs-blue:   #3165A7;
+      --ccs-teal:   #1A9A83;
+      --ccs-orange: #F3982D;
+      --ccs-navy:   #1F3C6E;
+      --ccs-gray:   #58595B;
+      --ccs-white:  #FFFFFF;
+
+      --ccs-gray-50:  #F7F8F9;
+      --ccs-gray-100: #ECEDEF;
+      --ccs-gray-200: #DADCE0;
+      --ccs-gray-400: #A8ACB1;
+      --ccs-gray-600: #6B6E73;
+      --ccs-gray-900: #1A1B1D;
+
+      --color-success: #10B981;
+      --color-warning: #F59E0B;
+      --color-danger:  #EF4444;
+
+      --header-h: 64px;
+      --sidebar-w: 280px;
+      --content-max: 820px;
+      --radius: 10px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+      --shadow-md: 0 4px 12px rgba(0,0,0,.06);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Noto Sans TC', 'Noto Sans SC', 'Noto Sans', 'Noto Sans Vietnamese', system-ui, sans-serif;
+      background: var(--ccs-gray-50);
+      color: var(--ccs-gray-900);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    html[lang="zh-CN"] body { font-family: 'Noto Sans SC', 'Noto Sans TC', system-ui, sans-serif; }
+    html[lang="en"]    body { font-family: 'Noto Sans', system-ui, sans-serif; }
+    html[lang="vi"]    body { font-family: 'Noto Sans Vietnamese', 'Noto Sans', system-ui, sans-serif; }
+
+    a { color: var(--ccs-blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* === Header === */
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      height: var(--header-h);
+      background: var(--ccs-white);
+      border-bottom: 1px solid var(--ccs-gray-200);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px;
+      gap: 16px;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700; color: var(--ccs-navy);
+      font-size: 17px; letter-spacing: .2px;
+      white-space: nowrap; overflow: hidden;
+    }
+    .brand-mark {
+      background: linear-gradient(135deg, var(--ccs-blue), var(--ccs-teal));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .brand-x { color: var(--ccs-gray-400); font-weight: 400; }
+    .brand-tenant { color: var(--ccs-navy); }
+
+    .header-tools {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .search {
+      position: relative;
+    }
+    .search input {
+      width: 280px; max-width: 38vw;
+      height: 38px; padding: 0 14px 0 36px;
+      border: 1px solid var(--ccs-gray-200);
+      border-radius: 999px;
+      background: var(--ccs-gray-50);
+      font-size: 14px; font-family: inherit;
+      transition: border-color .15s, background .15s;
+    }
+    .search input:focus {
+      outline: none;
+      border-color: var(--ccs-blue);
+      background: var(--ccs-white);
+      box-shadow: 0 0 0 3px rgba(49,101,167,.15);
+    }
+    .search::before {
+      content: ""; position: absolute; left: 14px; top: 50%;
+      width: 14px; height: 14px; transform: translateY(-50%);
+      background: no-repeat center/contain url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B6E73' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><line x1='21' y1='21' x2='16.65' y2='16.65'/></svg>");
+    }
+
+    .locale-switcher {
+      display: flex; gap: 2px;
+      padding: 3px; background: var(--ccs-gray-100);
+      border-radius: 999px;
+    }
+    .locale-switcher button {
+      border: none; background: transparent; cursor: pointer;
+      padding: 6px 12px; border-radius: 999px;
+      font-size: 13px; font-weight: 500; color: var(--ccs-gray-600);
+      font-family: inherit;
+      transition: background .15s, color .15s;
+    }
+    .locale-switcher button:hover { color: var(--ccs-navy); }
+    .locale-switcher button.active {
+      background: var(--ccs-white); color: var(--ccs-navy);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .refresh-btn {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border: 1px solid var(--ccs-gray-200);
+      background: var(--ccs-white); border-radius: 8px; cursor: pointer;
+      font-size: 12px; color: var(--ccs-gray-600); font-family: inherit;
+      transition: border-color .15s, color .15s;
+    }
+    .refresh-btn:hover { border-color: var(--ccs-blue); color: var(--ccs-blue); }
+    .refresh-btn .refresh-icon { font-size: 14px; line-height: 1; }
+    .refresh-btn.spinning .refresh-icon { animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .nav-toggle {
+      display: none;
+      border: none; background: transparent; cursor: pointer;
+      width: 40px; height: 40px; padding: 0;
+      font-size: 22px; color: var(--ccs-navy);
+    }
+
+    /* === Layout === */
+    .layout {
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      max-width: 1280px; margin: 0 auto;
+      padding: 24px;
+      gap: 28px;
+    }
+
+    /* === Sidebar (TOC) === */
+    .sidebar {
+      position: sticky;
+      top: calc(var(--header-h) + 24px);
+      align-self: start;
+      max-height: calc(100vh - var(--header-h) - 48px);
+      overflow-y: auto;
+    }
+    .toc {
+      background: var(--ccs-white);
+      border: 1px solid var(--ccs-gray-200);
+      border-radius: var(--radius);
+      padding: 18px 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .toc-title {
+      font-size: 12px; font-weight: 700; letter-spacing: .5px;
+      color: var(--ccs-gray-600); text-transform: uppercase;
+      margin: 0 8px 10px;
+    }
+    .toc ul { list-style: none; padding: 0; margin: 0; }
+    .toc a {
+      display: block;
+      padding: 8px 10px; border-radius: 6px;
+      color: var(--ccs-gray-900); font-size: 14px;
+      line-height: 1.45;
+      transition: background .15s, color .15s;
+    }
+    .toc a:hover {
+      background: var(--ccs-gray-50); color: var(--ccs-blue);
+      text-decoration: none;
+    }
+    .toc a.active {
+      background: rgba(49,101,167,.08); color: var(--ccs-blue);
+      font-weight: 500;
+    }
+    .toc a .toc-sub {
+      display: block; font-size: 12px; color: var(--ccs-gray-600);
+      margin-top: 2px;
+    }
+
+    /* === Content === */
+    .content {
+      min-width: 0;
+      max-width: var(--content-max);
+    }
+    .intro {
+      background: linear-gradient(135deg, rgba(49,101,167,.05), rgba(26,154,131,.05));
+      border: 1px solid var(--ccs-gray-200);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      margin-bottom: 24px;
+    }
+    .intro h1 {
+      margin: 0 0 4px; font-size: 22px; color: var(--ccs-navy);
+    }
+    .intro p { margin: 0; color: var(--ccs-gray-600); font-size: 14px; }
+    .intro .meta-line {
+      margin-top: 10px; font-size: 12px; color: var(--ccs-gray-600);
+      display: flex; flex-wrap: wrap; gap: 14px;
+    }
+    .intro .meta-line span::before { content: "·"; margin-right: 6px; color: var(--ccs-gray-400); }
+    .intro .meta-line span:first-child::before { content: ""; margin: 0; }
+
+    .section {
+      margin-top: 32px;
+      scroll-margin-top: calc(var(--header-h) + 16px);
+    }
+    .section-head {
+      display: flex; align-items: baseline; gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--ccs-gray-100);
+    }
+    .section-head h2 {
+      margin: 0; font-size: 19px; color: var(--ccs-navy);
+      font-weight: 700;
+    }
+    .section-head .section-sub {
+      font-size: 13px; color: var(--ccs-gray-600);
+    }
+
+    .qcard {
+      background: var(--ccs-white);
+      border: 1px solid var(--ccs-gray-200);
+      border-radius: var(--radius);
+      margin-bottom: 10px;
+      overflow: hidden;
+      scroll-margin-top: calc(var(--header-h) + 16px);
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .qcard:hover { border-color: var(--ccs-gray-400); }
+    .qcard.open {
+      border-color: var(--ccs-blue);
+      box-shadow: var(--shadow-md);
+    }
+    .qcard-head {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 14px 18px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .qcard-num {
+      flex: 0 0 auto;
+      font-size: 13px; font-weight: 700;
+      color: var(--ccs-blue);
+      background: rgba(49,101,167,.08);
+      padding: 3px 8px; border-radius: 999px;
+      margin-top: 2px;
+      letter-spacing: .3px;
+    }
+    .qcard-q {
+      flex: 1 1 auto;
+      font-size: 15px; font-weight: 500;
+      color: var(--ccs-gray-900);
+      line-height: 1.55;
+    }
+    .qcard-toggle {
+      flex: 0 0 auto;
+      font-size: 18px; color: var(--ccs-gray-400);
+      transition: transform .2s, color .15s;
+      line-height: 1;
+      margin-top: 4px;
+    }
+    .qcard.open .qcard-toggle { transform: rotate(180deg); color: var(--ccs-blue); }
+    .qcard-body {
+      padding: 0 18px 18px 18px;
+      display: none;
+      color: var(--ccs-gray-900);
+      font-size: 14.5px;
+    }
+    .qcard.open .qcard-body { display: block; }
+    .qcard-body p { margin: 0 0 12px; }
+    .qcard-body ul, .qcard-body ol { margin: 0 0 12px; padding-left: 22px; }
+    .qcard-body li { margin-bottom: 4px; }
+    .qcard-body strong { color: var(--ccs-navy); }
+    .qcard-body em { color: var(--ccs-teal); font-style: normal; font-weight: 500; }
+    .qcard-body code {
+      background: var(--ccs-gray-100);
+      padding: 1px 6px; border-radius: 4px;
+      font-size: .92em;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+    .qcard-body blockquote {
+      margin: 12px 0;
+      padding: 10px 14px;
+      border-left: 3px solid var(--ccs-teal);
+      background: var(--ccs-gray-50);
+      color: var(--ccs-gray-600);
+      border-radius: 0 6px 6px 0;
+    }
+    .qcard-body blockquote p:last-child { margin: 0; }
+    .qcard-body h4 {
+      margin: 16px 0 6px; font-size: 14px;
+      color: var(--ccs-navy);
+    }
+    .qcard-body a { color: var(--ccs-blue); text-decoration: underline; }
+    .qcard-body table {
+      border-collapse: collapse; width: 100%;
+      margin: 12px 0; font-size: 13px;
+    }
+    .qcard-body th, .qcard-body td {
+      border: 1px solid var(--ccs-gray-200);
+      padding: 8px 10px; text-align: left;
+    }
+    .qcard-body th { background: var(--ccs-gray-50); color: var(--ccs-navy); }
+    .qcard-permalink {
+      display: inline-flex; align-items: center; gap: 4px;
+      margin-top: 8px;
+      font-size: 12px; color: var(--ccs-gray-400);
+      text-decoration: none;
+    }
+    .qcard-permalink:hover { color: var(--ccs-blue); text-decoration: underline; }
+
+    .no-results {
+      text-align: center; padding: 48px 24px;
+      color: var(--ccs-gray-600);
+    }
+
+    .loading {
+      text-align: center; padding: 60px 24px;
+      color: var(--ccs-gray-600);
+    }
+
+    /* === Back to top === */
+    .back-to-top {
+      position: fixed; right: 24px; bottom: 24px;
+      width: 44px; height: 44px;
+      border: none; border-radius: 50%;
+      background: var(--ccs-navy); color: var(--ccs-white);
+      font-size: 20px; cursor: pointer;
+      box-shadow: 0 4px 12px rgba(31,60,110,.3);
+      opacity: 0; transform: translateY(8px);
+      transition: opacity .2s, transform .2s, background .15s;
+      z-index: 60;
+    }
+    .back-to-top.visible { opacity: 1; transform: translateY(0); }
+    .back-to-top:hover { background: var(--ccs-blue); }
+
+    /* === Sidebar overlay for mobile === */
+    .sidebar-backdrop {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(31,60,110,.4);
+      z-index: 40;
+    }
+    .sidebar-backdrop.visible { display: block; }
+
+    /* === Footer === */
+    .site-footer {
+      max-width: 1280px; margin: 0 auto;
+      padding: 32px 24px 48px;
+      color: var(--ccs-gray-600);
+      font-size: 12px;
+      text-align: center;
+    }
+    .site-footer a { color: var(--ccs-gray-600); }
+
+    /* === Responsive === */
+    @media (max-width: 900px) {
+      .site-header { padding: 0 16px; gap: 8px; }
+      .brand { font-size: 14px; gap: 6px; }
+      .nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
+      .search input { width: 0; padding: 0; opacity: 0; pointer-events: none; transition: none; }
+      .search.expanded input { width: 200px; padding: 0 14px 0 36px; opacity: 1; pointer-events: auto; }
+      .refresh-btn .last-updated { display: none; }
+
+      .layout { grid-template-columns: 1fr; padding: 16px; gap: 0; }
+      .sidebar {
+        position: fixed; top: 0; left: 0;
+        width: 280px; height: 100vh; max-height: none;
+        background: var(--ccs-white);
+        padding: 16px;
+        transform: translateX(-100%);
+        transition: transform .25s ease;
+        z-index: 45;
+        box-shadow: var(--shadow-md);
+      }
+      .sidebar.open { transform: translateX(0); }
+      .toc { border: none; box-shadow: none; padding: 8px 0; }
+
+      .content { padding: 0; }
+      .intro h1 { font-size: 19px; }
+    }
+    @media (max-width: 600px) {
+      .locale-switcher button { padding: 5px 8px; font-size: 12px; }
+      .refresh-btn { padding: 6px 8px; }
+      .qcard-head { padding: 12px 14px; gap: 10px; }
+      .qcard-body { padding: 0 14px 14px; font-size: 14px; }
+    }
+
+    /* === Print === */
+    @media print {
+      .site-header, .sidebar, .back-to-top, .refresh-btn, .nav-toggle, .locale-switcher, .search { display: none !important; }
+      .layout { grid-template-columns: 1fr; padding: 0; max-width: none; }
+      .qcard { break-inside: avoid; border: 1px solid #ccc; box-shadow: none; }
+      .qcard-body { display: block !important; }
+      .qcard-toggle { display: none; }
+      body { background: white; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <button class="nav-toggle" id="navToggle" aria-label="目錄">☰</button>
+    <a class="brand" href="#top">
+      <span class="brand-mark">Carbon Mate</span>
+      <span class="brand-x">×</span>
+      <span class="brand-tenant" id="brandTenant">元慶國際貿易</span>
+    </a>
+    <div class="header-tools">
+      <div class="search" id="searchWrap">
+        <input type="search" id="searchInput" placeholder="搜尋問題或關鍵字…" autocomplete="off">
+      </div>
+      <div class="locale-switcher" id="localeSwitcher" role="tablist"></div>
+      <button class="refresh-btn" id="refreshBtn" title="重新整理">
+        <span class="refresh-icon">↻</span>
+        <span class="last-updated" id="lastUpdated"></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <main class="layout" id="top">
+    <aside class="sidebar" id="sidebar">
+      <nav class="toc" id="toc" aria-label="章節導覽"></nav>
+    </aside>
+    <section class="content" id="content">
+      <div class="loading" id="loading">載入中…</div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>由 <strong>成創永續 Carbon Mate</strong> 為元慶國際貿易製作 · <span id="footerYear"></span></p>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="回到頂端">↑</button>
+
+  <!-- Vendor libs -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7/dist/fuse.min.js"></script>
+
+  <script>
+  (function () {
+    'use strict';
+
+    // ============================================================
+    // 設定:租戶資訊
+    // 注意:Phase 2 接 Firebase 後,這段會改成 dataProvider.getTenant()
+    // ============================================================
+    const TENANT = {
+      id: 'anyking',
+      name: {
+        'zh-TW': '元慶國際貿易',
+        'zh-CN': '元庆国际贸易',
+        'en':    'ANYKING INTERNATIONAL TRADING',
+        'vi':    'ANYKING INTERNATIONAL TRADING'
+      }
+    };
+
+    // ============================================================
+    // dataProvider — 抽象層
+    // Phase 1 實作:fetch locales/*.md
+    // Phase 2 將切換為 Firebase Realtime Database 讀取(不影響 UI)
+    // ============================================================
+    const dataProvider = {
+      _i18nConfig: null,
+
+      async getI18nConfig() {
+        if (this._i18nConfig) return this._i18nConfig;
+        const res = await fetch('i18n-config.json', { cache: 'no-cache' });
+        if (!res.ok) throw new Error('Failed to load i18n-config.json');
+        this._i18nConfig = await res.json();
+        return this._i18nConfig;
+      },
+
+      async getTenant(/* tenantId */) {
+        // Phase 1: 硬編碼;Phase 2 將從 Firebase tenants/<id>/meta 讀
+        return TENANT;
+      },
+
+      // 一次回傳「所有語系合併好」的 FAQ 結構,形狀刻意對齊未來 Firebase
+      // 回傳:{ sections: [{id, order, translations}], faqs: [{id, order, section, translations}], meta }
+      async getContent(tenantId) {
+        const cfg = await this.getI18nConfig();
+        const fetches = cfg.locales.map(async (loc) => {
+          const res = await fetch(`locales/${loc.file}`, { cache: 'no-cache' });
+          if (!res.ok) throw new Error(`Failed to load ${loc.file}`);
+          const text = await res.text();
+          return { locale: loc.code, parsed: parseFaqMd(text) };
+        });
+        const parsedLocales = await Promise.all(fetches);
+        return mergeLocales(parsedLocales);
+      }
+    };
+
+    // ============================================================
+    // Markdown FAQ 解析
+    // 結構:frontmatter (YAML) + body
+    // body: ## section {#anchor} → ### Qn. text {#qn} → 答案內文
+    // ============================================================
+    function parseFaqMd(text) {
+      const fmMatch = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+      if (!fmMatch) throw new Error('Frontmatter not found');
+      const meta = parseSimpleFrontmatter(fmMatch[1]);
+      const body = fmMatch[2];
+
+      const sections = [];
+      // 用 H2 切片:結果第一段是 frontmatter 後到首個 H2 前的引言,忽略
+      const blocks = body.split(/^## /m).slice(1);
+      let sectionOrder = 0;
+      blocks.forEach((block) => {
+        const lineEnd = block.indexOf('\n');
+        const headLine = (lineEnd === -1 ? block : block.slice(0, lineEnd)).trim();
+        const head = headLine.match(/^(.+?)\s*\{#([\w-]+)\}\s*$/);
+        if (!head) return;
+        const fullTitle = head[1].trim();
+        const sectionId = head[2];
+        // 標題若有冒號,前段為主名、後段為副標
+        const [titleMain, titleSub] = splitOnceByColon(fullTitle);
+        const sectionBody = lineEnd === -1 ? '' : block.slice(lineEnd + 1);
+
+        sectionOrder += 1;
+        const faqs = [];
+        const qBlocks = sectionBody.split(/^### /m).slice(1);
+        let qOrder = 0;
+        qBlocks.forEach((qBlock) => {
+          const qLineEnd = qBlock.indexOf('\n');
+          const qHeadLine = (qLineEnd === -1 ? qBlock : qBlock.slice(0, qLineEnd)).trim();
+          const qHead = qHeadLine.match(/^(Q\d+)\.\s*(.+?)\s*\{#(q\d+)\}\s*$/);
+          if (!qHead) return; // 附錄裡的非 Q 子標就略過
+          const qNum = qHead[1];
+          const qText = qHead[2].trim();
+          const qAnchor = qHead[3];
+          let answer = qLineEnd === -1 ? '' : qBlock.slice(qLineEnd + 1);
+          // 去掉題目間的分隔線 ---
+          answer = answer.replace(/\n---\s*\n?/g, '\n').trim();
+          qOrder += 1;
+          faqs.push({
+            id: qAnchor,
+            number: qNum,
+            order: qOrder,
+            section: sectionId,
+            question: qText,
+            answer: answer
+          });
+        });
+
+        sections.push({
+          id: sectionId,
+          order: sectionOrder,
+          name: titleMain,
+          label: titleSub || '',
+          faqs: faqs
+        });
+      });
+
+      return { meta, sections };
+    }
+
+    // 極簡 frontmatter parser:只處理 "key: value" 純量
+    // 我們需要的也只有 last_updated / version / title / locale 這類字串
+    function parseSimpleFrontmatter(yaml) {
+      const meta = {};
+      yaml.split(/\r?\n/).forEach((line) => {
+        if (!line || /^\s/.test(line)) return; // 跳過縮排行(陣列項)
+        const m = line.match(/^([A-Za-z_][\w-]*):\s*(.*)$/);
+        if (m && m[2] !== '') meta[m[1]] = m[2].trim();
+      });
+      return meta;
+    }
+
+    function splitOnceByColon(s) {
+      const m = s.match(/^([^:]+)[::]\s*(.+)$/);
+      return m ? [m[1].trim(), m[2].trim()] : [s, ''];
+    }
+
+    // 把四個語系合併成 Firebase-style 結構:每個 FAQ 都有 translations 物件
+    function mergeLocales(parsedLocales) {
+      const sectionsById = new Map();
+      const faqsById = new Map();
+      const metaByLocale = {};
+
+      parsedLocales.forEach(({ locale, parsed }) => {
+        metaByLocale[locale] = parsed.meta;
+        parsed.sections.forEach((sec) => {
+          if (!sectionsById.has(sec.id)) {
+            sectionsById.set(sec.id, {
+              id: sec.id, order: sec.order, translations: {}
+            });
+          }
+          sectionsById.get(sec.id).translations[locale] = { name: sec.name, label: sec.label };
+
+          sec.faqs.forEach((q) => {
+            if (!faqsById.has(q.id)) {
+              faqsById.set(q.id, {
+                id: q.id,
+                number: q.number,
+                order: q.order,
+                section: q.section,
+                translations: {}
+              });
+            }
+            faqsById.get(q.id).translations[locale] = {
+              question: q.question, answer: q.answer
+            };
+          });
+        });
+      });
+
+      const sections = Array.from(sectionsById.values()).sort((a, b) => a.order - b.order);
+      const faqs = Array.from(faqsById.values()).sort((a, b) => {
+        if (a.section !== b.section) {
+          const so = sections.findIndex(s => s.id === a.section) -
+                     sections.findIndex(s => s.id === b.section);
+          return so;
+        }
+        return a.order - b.order;
+      });
+      return { sections, faqs, metaByLocale };
+    }
+
+    // ============================================================
+    // 狀態
+    // ============================================================
+    const state = {
+      content: null,          // { sections, faqs, metaByLocale }
+      currentLocale: 'zh-TW',
+      i18nConfig: null,
+      fuse: null,
+      filterQuery: '',
+      loadedAt: null
+    };
+
+    // ============================================================
+    // 渲染:locale switcher、TOC、FAQ list
+    // ============================================================
+    const $ = (sel) => document.querySelector(sel);
+
+    function setLastUpdated() {
+      const t = state.loadedAt || new Date();
+      const hh = String(t.getHours()).padStart(2, '0');
+      const mm = String(t.getMinutes()).padStart(2, '0');
+      const label = state.i18nConfig.ui.lastUpdated[state.currentLocale];
+      $('#lastUpdated').textContent = `${label} ${hh}:${mm}`;
+    }
+
+    function renderLocaleSwitcher() {
+      const wrap = $('#localeSwitcher');
+      wrap.innerHTML = '';
+      state.i18nConfig.locales.forEach((loc) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.dataset.locale = loc.code;
+        btn.textContent = loc.nativeName;
+        btn.setAttribute('role', 'tab');
+        if (loc.code === state.currentLocale) btn.classList.add('active');
+        btn.addEventListener('click', () => switchLocale(loc.code));
+        wrap.appendChild(btn);
+      });
+    }
+
+    function renderBrand() {
+      $('#brandTenant').textContent = TENANT.name[state.currentLocale] || TENANT.name['zh-TW'];
+    }
+
+    function renderPlaceholders() {
+      $('#searchInput').placeholder = state.i18nConfig.ui.searchPlaceholder[state.currentLocale];
+      $('#backToTop').setAttribute('aria-label', state.i18nConfig.ui.backToTop[state.currentLocale]);
+      $('#refreshBtn').setAttribute('title', state.i18nConfig.ui.lastUpdated[state.currentLocale]);
+      document.title = buildPageTitle();
+      document.documentElement.lang = state.currentLocale;
+    }
+
+    function buildPageTitle() {
+      const tName = TENANT.name[state.currentLocale];
+      const titles = {
+        'zh-TW': `Carbon Mate × ${tName} — 供應商碳盤查 FAQ`,
+        'zh-CN': `Carbon Mate × ${tName} — 供应商碳盘查 FAQ`,
+        'en':    `Carbon Mate × ${tName} — Supplier Carbon Inventory FAQ`,
+        'vi':    `Carbon Mate × ${tName} — FAQ kiểm kê carbon nhà cung cấp`
+      };
+      return titles[state.currentLocale];
+    }
+
+    function renderTOC() {
+      const toc = $('#toc');
+      const cfg = state.i18nConfig.ui.tableOfContents[state.currentLocale];
+      toc.innerHTML = `<p class="toc-title">${cfg}</p><ul></ul>`;
+      const ul = toc.querySelector('ul');
+      state.content.sections.forEach((sec) => {
+        const t = sec.translations[state.currentLocale] || sec.translations['zh-TW'];
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `#section-${sec.id}`;
+        a.dataset.sectionId = sec.id;
+        // 顯示描述性標題;若沒有 label 則退回 name(例如「附錄」這種沒主標的情境)
+        a.textContent = t.label || t.name;
+        a.addEventListener('click', () => closeMobileSidebar());
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, (c) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
+    }
+
+    function renderContent() {
+      const root = $('#content');
+      const intro = state.content.metaByLocale[state.currentLocale] || {};
+      const tName = TENANT.name[state.currentLocale];
+
+      let html = `<div class="intro">
+        <h1>${escapeHtml(intro.title || `${tName} ${state.i18nConfig.ui.searchPlaceholder[state.currentLocale]}`)}</h1>
+        ${intro.subtitle ? `<p>${escapeHtml(intro.subtitle)}</p>` : ''}
+        <div class="meta-line">
+          ${intro.version ? `<span>${escapeHtml(intro.version)}</span>` : ''}
+          ${intro.based_on ? `<span>${escapeHtml(intro.based_on)}</span>` : ''}
+          ${intro.last_updated ? `<span>${state.i18nConfig.ui.lastUpdated[state.currentLocale]}:${escapeHtml(intro.last_updated)}</span>` : ''}
+        </div>
+      </div>`;
+
+      state.content.sections.forEach((sec) => {
+        const st = sec.translations[state.currentLocale] || sec.translations['zh-TW'];
+        const sectionFaqs = state.content.faqs.filter((q) => q.section === sec.id);
+        if (sectionFaqs.length === 0) return;
+        const sectionTitle = st.label || st.name;
+        html += `<div class="section" id="section-${escapeHtml(sec.id)}">
+          <div class="section-head">
+            <h2>${escapeHtml(sectionTitle)}</h2>
+          </div>
+          <div class="qlist">`;
+        sectionFaqs.forEach((q) => {
+          const qt = q.translations[state.currentLocale] || q.translations['zh-TW'];
+          const answerHtml = renderMarkdown(qt.answer);
+          html += `<article class="qcard" id="${escapeHtml(q.id)}" data-qid="${escapeHtml(q.id)}" data-section="${escapeHtml(q.section)}">
+            <div class="qcard-head" role="button" tabindex="0" aria-expanded="false">
+              <span class="qcard-num">${escapeHtml(q.number)}</span>
+              <span class="qcard-q">${escapeHtml(qt.question)}</span>
+              <span class="qcard-toggle" aria-hidden="true">⌄</span>
+            </div>
+            <div class="qcard-body">${answerHtml}
+              <a class="qcard-permalink" href="#${escapeHtml(q.id)}" title="Link">#${escapeHtml(q.id)}</a>
+            </div>
+          </article>`;
+        });
+        html += `</div></div>`;
+      });
+
+      root.innerHTML = html;
+
+      // Bind card click
+      root.querySelectorAll('.qcard-head').forEach((head) => {
+        head.addEventListener('click', () => toggleCard(head.parentElement));
+        head.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleCard(head.parentElement);
+          }
+        });
+      });
+
+      // Permalink clicks should not toggle parent
+      root.querySelectorAll('.qcard-permalink').forEach((a) => {
+        a.addEventListener('click', (e) => e.stopPropagation());
+      });
+    }
+
+    function renderMarkdown(md) {
+      // marked.parse 接 GFM 表格等;DOMPurify 二次防護
+      const raw = window.marked.parse(md, { gfm: true, breaks: false });
+      return window.DOMPurify.sanitize(raw, { ADD_ATTR: ['target'] });
+    }
+
+    function toggleCard(card, forceOpen) {
+      const willOpen = forceOpen !== undefined ? forceOpen : !card.classList.contains('open');
+      card.classList.toggle('open', willOpen);
+      card.querySelector('.qcard-head').setAttribute('aria-expanded', String(willOpen));
+    }
+
+    // ============================================================
+    // 語系切換
+    // ============================================================
+    async function switchLocale(code) {
+      if (code === state.currentLocale) return;
+      // 保留錨點
+      const anchor = window.location.hash;
+      state.currentLocale = code;
+      document.querySelectorAll('#localeSwitcher button').forEach((b) => {
+        b.classList.toggle('active', b.dataset.locale === code);
+      });
+      renderBrand();
+      renderPlaceholders();
+      renderTOC();
+      renderContent();
+      buildFuseIndex();
+      applyFilter();
+      setLastUpdated();
+      if (anchor) {
+        // 等下一個 tick 讓 DOM 完成
+        requestAnimationFrame(() => handleHash(anchor, false));
+      }
+    }
+
+    // ============================================================
+    // 搜尋 (Fuse.js)
+    // ============================================================
+    function buildFuseIndex() {
+      const items = state.content.faqs.map((q) => {
+        const t = q.translations[state.currentLocale] || q.translations['zh-TW'];
+        return {
+          id: q.id, number: q.number, section: q.section,
+          question: t.question, answer: t.answer
+        };
+      });
+      state.fuse = new window.Fuse(items, {
+        keys: [
+          { name: 'question', weight: 0.6 },
+          { name: 'answer', weight: 0.3 },
+          { name: 'number', weight: 0.1 }
+        ],
+        threshold: 0.35,
+        ignoreLocation: true,
+        includeMatches: false,
+        minMatchCharLength: 2
+      });
+    }
+
+    function applyFilter() {
+      const q = state.filterQuery.trim();
+      const cards = document.querySelectorAll('.qcard');
+      const sections = document.querySelectorAll('.section');
+
+      if (!q) {
+        cards.forEach((c) => { c.style.display = ''; });
+        sections.forEach((s) => { s.style.display = ''; });
+        removeNoResults();
+        return;
+      }
+
+      const hits = new Set(state.fuse.search(q).map((r) => r.item.id));
+      cards.forEach((c) => {
+        c.style.display = hits.has(c.dataset.qid) ? '' : 'none';
+      });
+      sections.forEach((s) => {
+        const visible = s.querySelectorAll('.qcard:not([style*="display: none"])').length > 0;
+        s.style.display = visible ? '' : 'none';
+      });
+
+      if (hits.size === 0) showNoResults();
+      else removeNoResults();
+    }
+
+    function showNoResults() {
+      removeNoResults();
+      const msg = document.createElement('div');
+      msg.className = 'no-results';
+      msg.id = 'noResults';
+      msg.textContent = state.i18nConfig.ui.noResults[state.currentLocale];
+      $('#content').appendChild(msg);
+    }
+    function removeNoResults() {
+      const el = $('#noResults');
+      if (el) el.remove();
+    }
+
+    // ============================================================
+    // 深層連結:#q24、#section-general
+    // 切換語系時、頁面載入時都會用
+    // ============================================================
+    function handleHash(hash, scrollSmooth) {
+      if (!hash || hash === '#' || hash === '#top') return;
+      const id = hash.slice(1);
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (el.classList.contains('qcard')) {
+        toggleCard(el, true);
+      }
+      el.scrollIntoView({ behavior: scrollSmooth ? 'smooth' : 'auto', block: 'start' });
+    }
+
+    // ============================================================
+    // Mobile sidebar
+    // ============================================================
+    function openMobileSidebar() {
+      $('#sidebar').classList.add('open');
+      $('#sidebarBackdrop').classList.add('visible');
+    }
+    function closeMobileSidebar() {
+      $('#sidebar').classList.remove('open');
+      $('#sidebarBackdrop').classList.remove('visible');
+    }
+
+    // ============================================================
+    // 重新整理(手動 + visibility change)
+    // 不用 Firebase 即時監聽 — 遷移友善原則
+    // ============================================================
+    async function refresh() {
+      const btn = $('#refreshBtn');
+      btn.classList.add('spinning');
+      try {
+        // 清除 i18n 快取以拿最新內容(MVP 階段 .md 變了會反映)
+        dataProvider._i18nConfig = null;
+        state.content = await dataProvider.getContent(TENANT.id);
+        state.loadedAt = new Date();
+        renderTOC();
+        renderContent();
+        buildFuseIndex();
+        applyFilter();
+        setLastUpdated();
+        // 若 URL 有錨點,重渲後重新對焦
+        if (window.location.hash) {
+          requestAnimationFrame(() => handleHash(window.location.hash, false));
+        }
+      } catch (err) {
+        console.error(err);
+        alert('無法連線到後端伺服器,請稍後重試。');
+      } finally {
+        setTimeout(() => btn.classList.remove('spinning'), 400);
+      }
+    }
+
+    // ============================================================
+    // 初始化
+    // ============================================================
+    async function init() {
+      // 1. i18n config
+      state.i18nConfig = await dataProvider.getI18nConfig();
+      state.currentLocale = state.i18nConfig.defaultLocale;
+
+      // 預設語系依瀏覽器猜測(若使用者首次造訪)
+      const stored = localStorage.getItem('ccs.faq.locale');
+      const browserPick = pickInitialLocale(state.i18nConfig.locales);
+      if (stored && state.i18nConfig.locales.some(l => l.code === stored)) {
+        state.currentLocale = stored;
+      } else if (browserPick) {
+        state.currentLocale = browserPick;
+      }
+
+      renderLocaleSwitcher();
+      renderBrand();
+      renderPlaceholders();
+
+      // 2. content
+      state.content = await dataProvider.getContent(TENANT.id);
+      state.loadedAt = new Date();
+
+      $('#loading')?.remove();
+      renderTOC();
+      renderContent();
+      buildFuseIndex();
+      setLastUpdated();
+
+      // 3. 處理初始 hash
+      if (window.location.hash) {
+        handleHash(window.location.hash, false);
+      }
+
+      // 4. 記住語系
+      bindLocaleMemory();
+
+      $('#footerYear').textContent = new Date().getFullYear();
+    }
+
+    function pickInitialLocale(locales) {
+      const nav = (navigator.language || 'zh-TW').toLowerCase();
+      if (nav.startsWith('vi')) return 'vi';
+      if (nav.startsWith('en')) return 'en';
+      if (nav.startsWith('zh-cn') || nav === 'zh' || nav.startsWith('zh-hans')) return 'zh-CN';
+      return 'zh-TW';
+    }
+
+    function bindLocaleMemory() {
+      // wrap switchLocale to persist
+      const orig = switchLocale;
+      window.switchLocale = async function (code) {
+        await orig(code);
+        try { localStorage.setItem('ccs.faq.locale', code); } catch (_) {}
+      };
+    }
+
+    // ============================================================
+    // 事件綁定
+    // ============================================================
+    function bindEvents() {
+      // 語系記憶(switchLocale 已 wrap 在 init 後;但首次 click 時間點問題,改為直接攔截)
+      $('#localeSwitcher').addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-locale]');
+        if (!btn) return;
+        try { localStorage.setItem('ccs.faq.locale', btn.dataset.locale); } catch (_) {}
+      });
+
+      // 搜尋
+      $('#searchInput').addEventListener('input', (e) => {
+        state.filterQuery = e.target.value;
+        applyFilter();
+      });
+
+      // 重新整理
+      $('#refreshBtn').addEventListener('click', refresh);
+
+      // visibility change → 自動重讀
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible' && state.loadedAt) {
+          const ageMs = Date.now() - state.loadedAt.getTime();
+          if (ageMs > 60_000) refresh();
+        }
+      });
+
+      // 回到頂端
+      const backToTop = $('#backToTop');
+      window.addEventListener('scroll', () => {
+        backToTop.classList.toggle('visible', window.scrollY > window.innerHeight);
+      }, { passive: true });
+      backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // 手機版 sidebar
+      $('#navToggle').addEventListener('click', () => {
+        const open = $('#sidebar').classList.contains('open');
+        open ? closeMobileSidebar() : openMobileSidebar();
+      });
+      $('#sidebarBackdrop').addEventListener('click', closeMobileSidebar);
+
+      // hash 變化(點 TOC 連結、複製 permalink)
+      window.addEventListener('hashchange', () => {
+        handleHash(window.location.hash, true);
+      });
+
+      // 行動裝置搜尋展開(寬度 ≤ 900 時)
+      $('#searchInput').addEventListener('focus', () => {
+        $('#searchWrap').classList.add('expanded');
+      });
+      $('#searchInput').addEventListener('blur', () => {
+        if (!state.filterQuery) $('#searchWrap').classList.remove('expanded');
+      });
+    }
+
+    // 啟動
+    bindEvents();
+    init().catch((err) => {
+      console.error(err);
+      const loading = $('#loading');
+      if (loading) {
+        loading.innerHTML = `<p>${escapeHtml('載入失敗,請稍後重新整理。')}</p>
+          <p style="font-size:12px;color:var(--ccs-gray-400);">${escapeHtml(err.message)}</p>`;
+      }
+    });
+
+  })();
+  </script>
+</body>
+</html>

@@ -47,7 +47,7 @@ sections:
 
 ---
 
-## Tổng quát: Câu hỏi tổng thể trước khi điền {#general}
+## Tổng quát: Trước khi bắt đầu điền {#general}
 
 ### Q1. Công ty chúng tôi chưa từng thực hiện kiểm kê carbon, chúng tôi có thực sự cần điền bảng khảo sát này không? {#q1}
 
@@ -107,7 +107,7 @@ Theo hướng dẫn, dữ liệu sẽ phục vụ năm mục đích:
 
 ---
 
-## Phần 1–2: Câu hỏi về thông tin cơ bản {#basic-info}
+## Phần 1–2: Thông tin cơ bản {#basic-info}
 
 ### Q7. B-3 "Quy mô doanh nghiệp" tính theo công ty đơn lẻ hay hợp nhất tập đoàn? {#q7}
 
@@ -150,7 +150,7 @@ Theo hướng dẫn: "**Chỉ định một quản lý hoặc người được 
 
 ---
 
-## Phần 3: Câu hỏi về danh mục sản phẩm / nguyên liệu {#product-list}
+## Phần 3: Danh mục sản phẩm / nguyên liệu {#product-list}
 
 ### Q12. C-1 yêu cầu "mỗi mã hàng độc lập điền một dòng", nhưng chúng tôi cung cấp 50 mã hàng cho ANYKING, có cần liệt kê hết không? {#q12}
 
@@ -186,7 +186,7 @@ ANYKING sẽ đánh giá tổng thể, không từ chối hồ sơ chỉ vì kh�
 
 ---
 
-## Phần 4: Câu hỏi về phân luồng lộ trình {#path-routing}
+## Phần 4: Phân luồng lộ trình {#path-routing}
 
 ### Q16. SBTi "Đã được xác thực mục tiêu chính thức" và "Đã cam kết nhưng chưa xác thực" khác nhau ở đâu? D-1 nên chọn cái nào? {#q16}
 
@@ -218,7 +218,7 @@ Khuyến nghị chọn **Lộ trình ③**, sau đó:
 
 ---
 
-## Phần 5: Câu hỏi về kiểm kê GHG cấp tổ chức ISO 14064-1 {#iso14064}
+## Phần 5: Kiểm kê GHG cấp tổ chức ISO 14064-1 {#iso14064}
 
 ### Q19. Chúng tôi thực hiện kiểm kê năm 2022, có tính là "trong 2 năm gần đây" không? {#q19}
 
@@ -270,7 +270,7 @@ Nếu công ty bạn thực sự chỉ có dữ liệu giá trị, hãy chọn k
 
 ---
 
-## Phần 6: Câu hỏi về dấu chân carbon sản phẩm ISO 14067 {#iso14067}
+## Phần 6: Dấu chân carbon sản phẩm ISO 14067 {#iso14067}
 
 ### Q24. F-2 "Đơn vị chức năng" là gì? Sản phẩm của chúng tôi là hóa chất đóng gói 1 kg, đơn vị chức năng có phải là 1 kg không? {#q24}
 
@@ -331,7 +331,7 @@ Cả hai đều phải điền — phục vụ các mục đích phân bổ khá
 
 ---
 
-## Phần 7: Câu hỏi về thông tin bổ sung (dữ liệu hoạt động) {#supplementary}
+## Phần 7: Thông tin bổ sung (dữ liệu hoạt động) {#supplementary}
 
 ### Q29. Phần 7 được đánh dấu "tùy chọn", có thực sự không cần điền không? {#q29}
 
@@ -380,7 +380,7 @@ Nếu sản phẩm có BOM rõ ràng, dùng tỷ lệ trọng lượng trong BOM
 
 ---
 
-## Phần 8–9: Câu hỏi về mục tiêu và biện pháp giảm phát thải {#targets-actions}
+## Phần 8–9: Mục tiêu và biện pháp giảm phát thải {#targets-actions}
 
 ### Q34. G-1 "Mục tiêu giảm phát thải" — chúng tôi có kế hoạch tiết kiệm năng lượng nhưng không đặt mục tiêu giảm chính thức, nên chọn gì? {#q34}
 
@@ -427,7 +427,7 @@ Câu hỏi này được thiết kế để **giúp các công ty chưa từng k
 
 ---
 
-## Phần 10: Câu hỏi về mức độ hợp tác và nhu cầu hỗ trợ {#cooperation}
+## Phần 10: Mức độ hợp tác và nhu cầu hỗ trợ {#cooperation}
 
 ### Q38. I-1 chọn "Hợp tác có giới hạn" có bị ANYKING hiểu là không hợp tác không? {#q38}
 
@@ -461,7 +461,7 @@ Nếu muốn tìm hiểu trước khi quyết định, chọn "Cần tìm hiểu
 
 ---
 
-## Phần 11–12: Câu hỏi về tài liệu đính kèm và tuyên bố {#attachments}
+## Phần 11–12: Tài liệu đính kèm và tuyên bố {#attachments}
 
 ### Q41. Chúng tôi tạm thời chưa lấy được chứng chỉ ISO 14064-1 (tập đoàn còn đang tổng hợp), bảng kiểm tra tài liệu đính kèm điền thế nào? {#q41}
 
