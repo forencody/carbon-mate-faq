@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carbon Mate · FAQ 管理後台</title>
+  <meta name="description" content="Carbon Mate FAQ 管理後台 — 成創永續為元慶國際貿易供應鏈管理製作。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233165A7'/%3E%3Cstop offset='1' stop-color='%231A9A83'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='7' fill='url(%23g)'/%3E%3Ctext x='16' y='22' font-size='18' fill='white' text-anchor='middle' font-family='-apple-system,sans-serif' font-weight='700'%3EC%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ccs-blue:   #3165A7;
+      --ccs-teal:   #1A9A83;
+      --ccs-orange: #F3982D;
+      --ccs-navy:   #1F3C6E;
+      --ccs-gray:   #58595B;
+      --ccs-white:  #FFFFFF;
+
+      --ccs-gray-50:  #F7F8F9;
+      --ccs-gray-100: #ECEDEF;
+      --ccs-gray-200: #DADCE0;
+      --ccs-gray-400: #A8ACB1;
+      --ccs-gray-600: #6B6E73;
+      --ccs-gray-900: #1A1B1D;
+
+      --color-success: #10B981;
+      --color-warning: #F59E0B;
+      --color-danger:  #EF4444;
+
+      --header-h: 60px;
+      --radius: 10px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+      --shadow-md: 0 4px 12px rgba(0,0,0,.06);
+      --shadow-lg: 0 12px 32px rgba(0,0,0,.08);
+    }
+
+    * { box-sizing: border-box; }
+    /* 強制讓 hidden 屬性壓過後面任何 display 規則 */
+    [hidden] { display: none !important; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: 'Noto Sans TC', system-ui, sans-serif;
+      background: var(--ccs-gray-50);
+      color: var(--ccs-gray-900);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--ccs-blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    button { font-family: inherit; }
+
+    /* ===== Initial loader ===== */
+    .initial-loader {
+      display: flex; align-items: center; justify-content: center;
+      height: 100vh; color: var(--ccs-gray-600);
+    }
+
+    /* ===== Login screen ===== */
+    .login-screen {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; padding: 20px;
+      background: linear-gradient(135deg, rgba(49,101,167,.06), rgba(26,154,131,.06));
+    }
+    .login-card {
+      width: 100%; max-width: 380px;
+      background: var(--ccs-white);
+      border-radius: 14px;
+      padding: 36px 32px 28px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--ccs-gray-100);
+    }
+    .login-card h1 {
+      margin: 0 0 4px;
+      font-size: 26px; font-weight: 700;
+      background: linear-gradient(135deg, var(--ccs-blue), var(--ccs-teal));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      letter-spacing: -0.3px;
+    }
+    .login-card .subtitle {
+      margin: 0 0 24px;
+      font-size: 13px; color: var(--ccs-gray-600);
+    }
+    .login-card form { display: flex; flex-direction: column; gap: 14px; }
+    .field { display: flex; flex-direction: column; gap: 4px; }
+    .field span {
+      font-size: 12px; font-weight: 500; color: var(--ccs-gray-600);
+      letter-spacing: .2px;
+    }
+    .field input {
+      height: 40px; padding: 0 12px;
+      border: 1px solid var(--ccs-gray-200);
+      border-radius: 8px;
+      font-size: 14px; font-family: inherit;
+      background: var(--ccs-gray-50);
+      transition: border-color .15s, background .15s, box-shadow .15s;
+    }
+    .field input:focus {
+      outline: none;
+      border-color: var(--ccs-blue);
+      background: var(--ccs-white);
+      box-shadow: 0 0 0 3px rgba(49,101,167,.12);
+    }
+
+    /* 密碼輸入框 + 顯示切換 */
+    .password-wrap { position: relative; }
+    .password-wrap input { padding-right: 40px; width: 100%; }
+    .pwd-toggle {
+      position: absolute; right: 4px; top: 50%;
+      transform: translateY(-50%);
+      width: 32px; height: 32px; padding: 0;
+      border: none; background: transparent;
+      cursor: pointer; color: var(--ccs-gray-400);
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 6px;
+      transition: color .15s, background .15s;
+    }
+    .pwd-toggle:hover { color: var(--ccs-gray-600); background: var(--ccs-gray-100); }
+    .pwd-toggle:focus { outline: 2px solid rgba(49,101,167,.4); outline-offset: 1px; }
+    .pwd-toggle svg { width: 18px; height: 18px; display: block; }
+    .pwd-toggle .eye-off { display: none; }
+    .pwd-toggle.showing .eye-on { display: none; }
+    .pwd-toggle.showing .eye-off { display: block; }
+    .login-card button[type="submit"] {
+      height: 42px; margin-top: 6px;
+      background: var(--ccs-navy); color: var(--ccs-white);
+      border: none; border-radius: 8px;
+      font-size: 14px; font-weight: 500;
+      cursor: pointer;
+      transition: background .15s, transform .05s;
+    }
+    .login-card button[type="submit"]:hover:not(:disabled) { background: var(--ccs-blue); }
+    .login-card button[type="submit"]:active:not(:disabled) { transform: scale(0.99); }
+    .login-card button[type="submit"]:disabled {
+      background: var(--ccs-gray-400); cursor: not-allowed;
+    }
+    .error-msg {
+      padding: 9px 12px;
+      background: rgba(239,68,68,.08); color: var(--color-danger);
+      border: 1px solid rgba(239,68,68,.2);
+      border-radius: 8px; font-size: 13px;
+      margin-top: -4px;
+    }
+    .link-subtle {
+      display: inline-block; margin-top: 18px;
+      font-size: 12px; color: var(--ccs-gray-600);
+    }
+    .link-subtle:hover { color: var(--ccs-blue); }
+
+    /* ===== Admin header (post-login) ===== */
+    .admin-header {
+      position: sticky; top: 0; z-index: 40;
+      height: var(--header-h);
+      background: var(--ccs-white);
+      border-bottom: 1px solid var(--ccs-gray-200);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px;
+    }
+    .brand {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-weight: 700; color: var(--ccs-navy);
+      font-size: 15px;
+    }
+    .brand:hover { text-decoration: none; }
+    .brand .brand-mark {
+      background: linear-gradient(135deg, var(--ccs-blue), var(--ccs-teal));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .brand .brand-divider { color: var(--ccs-gray-400); font-weight: 400; }
+    .brand .brand-tenant { color: var(--ccs-navy); font-weight: 500; font-size: 14px; }
+
+    .header-tools {
+      display: flex; align-items: center; gap: 16px;
+    }
+    .user-info {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 13px; color: var(--ccs-gray-600);
+    }
+    .user-badge {
+      font-size: 11px; font-weight: 500;
+      padding: 3px 8px; border-radius: 999px;
+      letter-spacing: .3px;
+      background: var(--ccs-gray-100); color: var(--ccs-gray-600);
+    }
+    .user-badge.role-super_admin { background: rgba(243,152,45,.15); color: var(--ccs-orange); }
+    .user-badge.role-tenant_admin { background: rgba(49,101,167,.12); color: var(--ccs-blue); }
+    .user-badge.role-tenant_user { background: rgba(26,154,131,.12); color: var(--ccs-teal); }
+    .logout-btn {
+      background: var(--ccs-white); color: var(--ccs-gray-900);
+      border: 1px solid var(--ccs-gray-200);
+      padding: 6px 12px; border-radius: 8px;
+      font-size: 13px; cursor: pointer;
+      transition: border-color .15s, color .15s;
+    }
+    .logout-btn:hover { border-color: var(--ccs-navy); color: var(--ccs-navy); }
+
+    /* ===== Main pane ===== */
+    .main-pane {
+      max-width: 960px; margin: 0 auto;
+      padding: 32px 24px 64px;
+    }
+    .pane {
+      background: var(--ccs-white);
+      border: 1px solid var(--ccs-gray-200);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+    .pane h2 {
+      margin: 0 0 4px;
+      font-size: 20px; color: var(--ccs-navy);
+    }
+    .pane .subtitle {
+      margin: 0 0 22px;
+      color: var(--ccs-gray-600); font-size: 13px;
+    }
+
+    /* ===== Tenant selector ===== */
+    .tenant-list {
+      list-style: none; padding: 0; margin: 0;
+      display: grid; gap: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+    .tenant-card {
+      width: 100%; padding: 18px 20px;
+      background: var(--ccs-white);
+      border: 1px solid var(--ccs-gray-200);
+      border-radius: 10px;
+      cursor: pointer; text-align: left;
+      display: flex; flex-direction: column; gap: 6px;
+      transition: border-color .15s, box-shadow .15s, transform .05s;
+    }
+    .tenant-card:hover {
+      border-color: var(--ccs-blue);
+      box-shadow: var(--shadow-md);
+    }
+    .tenant-card:active { transform: scale(0.99); }
+    .tenant-card strong {
+      font-size: 15px; color: var(--ccs-navy);
+    }
+    .tenant-card .tenant-id {
+      font-size: 12px; color: var(--ccs-gray-400);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ===== Workspace ===== */
+    .workspace-head {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 16px; margin-bottom: 24px;
+      padding-bottom: 18px; border-bottom: 1px solid var(--ccs-gray-100);
+    }
+    .workspace-head h2 { margin: 0 0 4px; }
+    .workspace-head .subtitle { margin: 0; }
+    .workspace-actions { display: flex; gap: 10px; align-items: center; }
+    .back-btn {
+      background: var(--ccs-white); color: var(--ccs-gray-900);
+      border: 1px solid var(--ccs-gray-200);
+      padding: 6px 12px; border-radius: 8px;
+      font-size: 13px; cursor: pointer;
+      transition: border-color .15s, color .15s;
+    }
+    .back-btn:hover { border-color: var(--ccs-blue); color: var(--ccs-blue); }
+
+    .workspace-body { color: var(--ccs-gray-600); }
+    .placeholder {
+      padding: 36px 20px; text-align: center;
+      background: var(--ccs-gray-50); border-radius: 8px;
+      color: var(--ccs-gray-600); margin: 0 0 8px;
+    }
+    .placeholder-sub {
+      text-align: center; font-size: 12px; color: var(--ccs-gray-400);
+      margin: 0;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 600px) {
+      .admin-header { padding: 0 16px; gap: 8px; }
+      .header-tools { gap: 10px; }
+      .user-info span:last-child { display: none; }
+      .main-pane { padding: 20px 16px 40px; }
+      .pane { padding: 20px; }
+      .workspace-head { flex-direction: column; align-items: stretch; }
+      .login-card { padding: 28px 22px 22px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 初始載入態(等 Firebase Auth 判斷登入狀態) -->
+  <div id="initialLoader" class="initial-loader">
+    <p>載入中…</p>
+  </div>
+
+  <!-- 登入畫面 -->
+  <section id="loginScreen" class="login-screen" hidden>
+    <div class="login-card">
+      <h1>Carbon Mate</h1>
+      <p class="subtitle">FAQ 管理後台</p>
+      <form id="loginForm" novalidate>
+        <label class="field">
+          <span>Email</span>
+          <input type="email" id="emailInput" required autocomplete="email" autocapitalize="off" autocorrect="off" spellcheck="false">
+        </label>
+        <label class="field">
+          <span>密碼</span>
+          <div class="password-wrap">
+            <input type="password" id="pwdInput" required autocomplete="current-password">
+            <button type="button" id="pwdToggle" class="pwd-toggle" aria-label="顯示密碼" title="顯示 / 隱藏密碼">
+              <svg class="eye-on" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              <svg class="eye-off" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                <line x1="1" y1="1" x2="23" y2="23"/>
+              </svg>
+            </button>
+          </div>
+        </label>
+        <button type="submit" id="loginBtn">登入</button>
+        <div id="loginError" class="error-msg" hidden></div>
+      </form>
+      <a href="#" id="forgotPwd" class="link-subtle">忘記密碼?</a>
+    </div>
+  </section>
+
+  <!-- 登入後 header -->
+  <header id="adminHeader" class="admin-header" hidden>
+    <a class="brand" href="#">
+      <span class="brand-mark">Carbon Mate</span>
+      <span class="brand-divider">·</span>
+      <span class="brand-tenant">FAQ 管理後台</span>
+    </a>
+    <div class="header-tools">
+      <span class="user-info">
+        <span id="userBadge" class="user-badge"></span>
+        <span id="userEmail"></span>
+      </span>
+      <button class="logout-btn" id="logoutBtn">登出</button>
+    </div>
+  </header>
+
+  <!-- super_admin:tenant 選擇頁 -->
+  <main id="tenantSelector" class="main-pane" hidden>
+    <section class="pane">
+      <h2>選擇要管理的客戶</h2>
+      <p class="subtitle">作為 super_admin,您可以管理所有客戶的 FAQ。點下方任一客戶卡片進入。</p>
+      <ul class="tenant-list" id="tenantList"></ul>
+    </section>
+  </main>
+
+  <!-- 工作區(進入特定 tenant) -->
+  <main id="faqWorkspace" class="main-pane" hidden>
+    <section class="pane">
+      <div class="workspace-head">
+        <div>
+          <h2 id="workspaceTitle">FAQ 管理</h2>
+          <p class="subtitle" id="workspaceSubtitle"></p>
+        </div>
+        <div class="workspace-actions">
+          <button class="back-btn" id="backToTenants" hidden>← 切換客戶</button>
+          <a class="link-subtle" id="visitorLink" href="index.html" target="_blank" rel="noopener">↗ 開訪客頁</a>
+        </div>
+      </div>
+      <div class="workspace-body" id="workspaceBody">
+        <p class="placeholder">FAQ 列表將於 Milestone B 完成後顯示在此</p>
+        <p class="placeholder-sub">Milestone A 已完成:登入、角色路由、登出</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Vendor + 共用層 -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-database-compat.js"></script>
+  <script src="app.js"></script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // 啟動健檢:若 Firebase SDK 或 app.js 沒到位,在頁面上直接顯示原因
+      function bootFailure(reason) {
+        const el = document.getElementById('initialLoader');
+        if (el) {
+          el.innerHTML =
+            '<div style="text-align:center;padding:24px;max-width:520px;">' +
+              '<p style="color:#EF4444;font-weight:600;margin:0 0 8px;font-size:15px;">初始化失敗</p>' +
+              '<p style="color:#6B6E73;font-size:13px;margin:0 0 16px;">' + reason + '</p>' +
+              '<p style="color:#A8ACB1;font-size:12px;margin:0;">請開 DevTools Console(Cmd+Opt+I)查看詳細錯誤,或強制重整頁面(Cmd+Shift+R)。</p>' +
+            '</div>';
+        }
+        console.error('[Boot] ' + reason);
+      }
+      if (typeof firebase === 'undefined') {
+        bootFailure('Firebase SDK 未載入(可能網路被擋或 CDN 連線失敗)');
+        return;
+      }
+      if (!window.CCS) {
+        bootFailure('共用層 app.js 未載入,或載入時拋錯。');
+        return;
+      }
+
+      // 5 秒保護:若 onAuthStateChanged 都沒 fire,強制顯示登入畫面避免永遠卡住
+      const initialLoaderTimer = setTimeout(() => {
+        const loader = document.getElementById('initialLoader');
+        if (loader && !loader.hidden) {
+          console.warn('[Boot] onAuthStateChanged 5 秒內未 fire,強制顯示登入畫面');
+          loader.hidden = true;
+          document.getElementById('loginScreen').hidden = false;
+        }
+      }, 5000);
+
+      const { authProvider, dataProvider, TENANT, escapeHtml } = window.CCS;
+      const $ = (sel) => document.querySelector(sel);
+
+      // ============================================================
+      // 友善錯誤訊息(避免直接顯示 Firebase 內部 code 給使用者)
+      // ============================================================
+      const AUTH_ERR_MSG = {
+        'auth/invalid-email':           'Email 格式不正確',
+        'auth/user-not-found':          '帳號或密碼錯誤',
+        'auth/wrong-password':          '帳號或密碼錯誤',
+        'auth/invalid-credential':      '帳號或密碼錯誤',
+        'auth/missing-password':        '請輸入密碼',
+        'auth/too-many-requests':       '嘗試次數過多,請稍後再試或重設密碼',
+        'auth/user-disabled':           '此帳號已停用,請聯絡管理員',
+        'auth/network-request-failed':  '網路連線失敗,請檢查網路'
+      };
+      function friendlyAuthError(err) {
+        const code = err && err.code;
+        return AUTH_ERR_MSG[code] || `登入失敗,請稍後再試${code ? '(' + code + ')' : ''}`;
+      }
+
+      // ============================================================
+      // View 切換(只有一個 view 可見)
+      // ============================================================
+      const VIEWS = ['initialLoader', 'loginScreen', 'tenantSelector', 'faqWorkspace'];
+      function showView(id) {
+        VIEWS.forEach((v) => {
+          const el = document.getElementById(v);
+          if (el) el.hidden = (v !== id);
+        });
+      }
+      function showHeader(show) {
+        const h = $('#adminHeader');
+        if (h) h.hidden = !show;
+      }
+
+      // ============================================================
+      // 角色顯示
+      // ============================================================
+      const ROLE_LABEL = {
+        'super_admin':  'Super',
+        'tenant_admin': 'Admin',
+        'tenant_user':  'User'
+      };
+
+      // ============================================================
+      // 登入表單
+      // ============================================================
+      $('#loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = $('#emailInput').value.trim();
+        const pwd = $('#pwdInput').value;
+        const btn = $('#loginBtn');
+        const errEl = $('#loginError');
+        errEl.hidden = true;
+        btn.disabled = true;
+        btn.textContent = '登入中…';
+        try {
+          await authProvider.login(email, pwd);
+          // 後續路由由 onAuthStateChanged 處理
+        } catch (err) {
+          errEl.textContent = friendlyAuthError(err);
+          errEl.hidden = false;
+          btn.disabled = false;
+          btn.textContent = '登入';
+        }
+      });
+
+      $('#forgotPwd').addEventListener('click', async (e) => {
+        e.preventDefault();
+        const email = ($('#emailInput').value || '').trim();
+        if (!email) {
+          alert('請先在 Email 欄位輸入您的 email,系統會寄重設密碼信件給您。');
+          $('#emailInput').focus();
+          return;
+        }
+        try {
+          await authProvider.resetPassword(email);
+          alert(`已寄送重設密碼信件到 ${email},請至信箱查看(可能在垃圾信件匣)。`);
+        } catch (err) {
+          alert(friendlyAuthError(err));
+        }
+      });
+
+      $('#pwdToggle').addEventListener('click', () => {
+        const input = $('#pwdInput');
+        const btn = $('#pwdToggle');
+        const isShowing = input.type === 'text';
+        input.type = isShowing ? 'password' : 'text';
+        btn.classList.toggle('showing', !isShowing);
+        btn.setAttribute('aria-label', isShowing ? '顯示密碼' : '隱藏密碼');
+        input.focus();
+      });
+
+      $('#logoutBtn').addEventListener('click', async () => {
+        if (confirm('確定要登出?')) {
+          await authProvider.logout();
+        }
+      });
+
+      $('#backToTenants').addEventListener('click', () => routeToTenantSelector());
+
+      // ============================================================
+      // 路由
+      // ============================================================
+      async function routeAfterLogin(user) {
+        if (!user) {
+          showHeader(false);
+          showView('loginScreen');
+          return;
+        }
+
+        // 設定 header
+        $('#userEmail').textContent = user.email || '';
+        $('#userBadge').textContent = ROLE_LABEL[user.role] || '?';
+        $('#userBadge').className = `user-badge role-${user.role || 'unknown'}`;
+        showHeader(true);
+
+        // 依角色分流
+        if (user.role === 'super_admin') {
+          await routeToTenantSelector();
+        } else if (user.role === 'tenant_admin' || user.role === 'tenant_user') {
+          if (!user.tenantId) {
+            alert('您的帳號未設定 tenantId,請聯絡 super_admin 協助設定。');
+            await authProvider.logout();
+            return;
+          }
+          await routeToWorkspace(user.tenantId, user);
+        } else {
+          alert(`未授權的角色「${user.role || '未設定'}」,請聯絡管理員。`);
+          await authProvider.logout();
+        }
+      }
+
+      async function routeToTenantSelector() {
+        $('#backToTenants').hidden = true;
+        // M-A 階段:暫以 hardcoded 顯示 anyking(Phase 4 super_admin 介面會做 listTenants)
+        const tenants = [
+          { id: 'anyking', name: TENANT.name['zh-TW'] }
+        ];
+        const ul = $('#tenantList');
+        ul.innerHTML = '';
+        tenants.forEach((t) => {
+          const li = document.createElement('li');
+          const btn = document.createElement('button');
+          btn.className = 'tenant-card';
+          btn.dataset.tenantId = t.id;
+          btn.innerHTML = `
+            <strong>${escapeHtml(t.name)}</strong>
+            <span class="tenant-id">${escapeHtml(t.id)}</span>
+          `;
+          btn.addEventListener('click', async () => {
+            const u = await authProvider.getCurrentUser();
+            await routeToWorkspace(t.id, u);
+          });
+          li.appendChild(btn);
+          ul.appendChild(li);
+        });
+        showView('tenantSelector');
+      }
+
+      async function routeToWorkspace(tenantId, user) {
+        try {
+          const tenant = await dataProvider.getTenant(tenantId);
+          $('#workspaceTitle').textContent = `${tenant.name['zh-TW']} · FAQ 管理`;
+          if (tenant.meta) {
+            const parts = [];
+            if (tenant.meta.surveyVersion) parts.push(`問卷 ${tenant.meta.surveyVersion}`);
+            if (tenant.meta.surveyDate) parts.push(tenant.meta.surveyDate);
+            $('#workspaceSubtitle').textContent = parts.join(' · ');
+          } else {
+            $('#workspaceSubtitle').textContent = '';
+          }
+        } catch (e) {
+          console.error('讀取 tenant 失敗', e);
+          $('#workspaceTitle').textContent = `${tenantId} · FAQ 管理`;
+          $('#workspaceSubtitle').textContent = '';
+        }
+        $('#backToTenants').hidden = !(user && user.role === 'super_admin');
+        $('#visitorLink').href = `index.html?tenant=${encodeURIComponent(tenantId)}`;
+        showView('faqWorkspace');
+      }
+
+      // ============================================================
+      // 初始狀態:onAuthStateChanged 會在 SDK 啟動後立即 fire 一次
+      // ============================================================
+      authProvider.onAuthStateChanged(async (fbUser) => {
+        clearTimeout(initialLoaderTimer);
+        if (!fbUser) {
+          $('#loginBtn').disabled = false;
+          $('#loginBtn').textContent = '登入';
+          $('#pwdInput').value = '';
+          showHeader(false);
+          showView('loginScreen');
+          return;
+        }
+        try {
+          const profile = await authProvider.getCurrentUser();
+          await routeAfterLogin(profile);
+        } catch (err) {
+          console.error('讀取使用者 profile 失敗', err);
+          alert('讀取使用者資料失敗,請重新登入。');
+          await authProvider.logout();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
